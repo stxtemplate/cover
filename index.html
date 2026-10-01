@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Template Studio Online V58</title>
+<title>Template Studio Online V59</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;600;700;800&family=Noto+Sans+Thai:wght@400;500;600;700;800&family=Prompt:wght@400;500;600;700;800&family=Sarabun:wght@400;500;600;700&display=swap');
 *{box-sizing:border-box}body{margin:0;font-family:Arial,"Noto Sans Thai",sans-serif;background:#eef1f5;color:#18202a}
@@ -51,7 +51,7 @@ input[type=color]{width:100%;height:36px;border:0;background:none;padding:0}
 <body>
 <div class="app">
 <header class="top">
-<div class="brand">Template Studio Online V58</div>
+<div class="brand">Template Studio Online V59</div>
 <button class="btn" id="undo">↶ Undo</button><button class="btn" id="redo">↷ Redo</button>
 <button class="btn" id="clear">ล้าง</button><select class="btn" id="exportFormat" aria-label="รูปแบบไฟล์"><option value="png">PNG</option><option value="jpeg">JPG</option></select><button class="btn primary" id="export">Export</button>
 </header>
@@ -241,8 +241,19 @@ function bind(el,handle,it){
       showCenterGuides(true,true);
       el.style.left=it.x+'px'; el.style.top=it.y+'px';
     }else if(resizing){
-      it.w=Math.max(40,ow+(ev.clientX-sx)/sc);
-      it.h=Math.max(25,oh+(ev.clientY-sy)/sc);
+      const dw=(ev.clientX-sx)/sc;
+      const dh=(ev.clientY-sy)/sc;
+      if(it.type==='logo'){
+        // Keep logo proportions locked while resizing from the bottom-right handle.
+        // The ratio is captured from the original image when the logo is added.
+        const ratio=Number(it.aspectRatio)||(ow/Math.max(1,oh));
+        const nw=Math.max(40,ow+dw);
+        const nh=Math.max(40,nw/ratio);
+        it.w=nw; it.h=nh;
+      }else{
+        it.w=Math.max(40,ow+dw);
+        it.h=Math.max(25,oh+dh);
+      }
       if(it.type==='bar' && it.fit!=='manual') fitBar(it,el);
       el.style.width=it.w+'px'; el.style.height=it.h+'px';
     }
@@ -323,13 +334,30 @@ function renderProps(){
  if(document.getElementById('pbg'))bindv('pbg',v=>{it.bg=v;const z=document.getElementById('pbgval');if(z)z.textContent=v});
  if(document.getElementById('pfit'))document.getElementById('pfit').onchange=()=>{it.fit=document.getElementById('pfit').value; if(it.fit==='full')it.w=Math.max(40,state.w-it.x); sync();};
  if(document.getElementById('pzoom')){const zq=document.getElementById('pzoom'), zv=document.getElementById('pzoomval'); const setZoom=v=>{it.zoom=Math.max(1,Math.min(3,+v||1));zq.value=it.zoom;zv.textContent=Math.round(it.zoom*100)+'%';sync()}; zq.oninput=()=>setZoom(zq.value); document.getElementById('zoomout').onclick=()=>setZoom(it.zoom-0.1); document.getElementById('zoomin').onclick=()=>setZoom(it.zoom+0.1);}
- ['px','py','pw','ph'].forEach(k=>bindv(k,v=>{
+ ['px','py'].forEach(k=>bindv(k,v=>{
    const n=Math.max(0,+v||0);
    if(k==='px') it.x=Math.min(n,Math.max(0,state.w-it.w));
    if(k==='py') it.y=Math.min(n,Math.max(0,state.h-it.h));
-   if(k==='pw') it.w=Math.max(20,n);
-   if(k==='ph') it.h=Math.max(20,n);
  }));
+ const pw=document.getElementById('pw'), ph=document.getElementById('ph');
+ if(pw) pw.oninput=()=>{
+   const n=Math.max(20,+pw.value||20);
+   if(it.type==='logo'){
+     const ratio=Number(it.aspectRatio)||(it.w/Math.max(1,it.h));
+     it.w=n; it.h=Math.max(20,n/ratio);
+     if(ph) ph.value=Math.round(it.h);
+   }else it.w=n;
+   sync();
+ };
+ if(ph) ph.oninput=()=>{
+   const n=Math.max(20,+ph.value||20);
+   if(it.type==='logo'){
+     const ratio=Number(it.aspectRatio)||(it.w/Math.max(1,it.h));
+     it.h=n; it.w=Math.max(20,n*ratio);
+     if(pw) pw.value=Math.round(it.w);
+   }else it.h=n;
+   sync();
+ };
  const updateAlignedElement=()=>{
    const el=elById();
    if(!el)return;
@@ -429,7 +457,7 @@ document.getElementById('mobileLogoFile').onchange=e=>{handleImageFile(e.target.
 function addFrom(type,src,nw,nh){
   // nw/nh are the image's natural dimensions. Scale exactly once.
   let iw=Number(nw)||1080, ih=Number(nh)||1350;
-  const it={id:newId(),type,x:40,y:40,w:360,h:240,src,locked:false}; if(type==='image') it.zoom=1;
+  const it={id:newId(),type,x:40,y:40,w:360,h:240,src,locked:false}; if(type==='image') it.zoom=1; if(type==='logo') it.aspectRatio=iw/ih;
   if(type==='logo'){
     const maxW=Math.min(300,state.w*0.35), maxH=Math.min(220,state.h*0.25);
     const s=Math.min(maxW/iw,maxH/ih,1);
