@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Template Studio Online V62</title>
+<title>Template Studio Online V63</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;600;700;800&family=Noto+Sans+Thai:wght@400;500;600;700;800&family=Prompt:wght@400;500;600;700;800&family=Sarabun:wght@400;500;600;700&display=swap');
 *{box-sizing:border-box}body{margin:0;font-family:Arial,"Noto Sans Thai",sans-serif;background:#eef1f5;color:#18202a}
@@ -51,7 +51,7 @@ input[type=color]{width:100%;height:36px;border:0;background:none;padding:0}
 <body>
 <div class="app">
 <header class="top">
-<div class="brand">Template Studio Online V62</div>
+<div class="brand">Template Studio Online V63</div>
 <button class="btn" id="undo">↶ Undo</button><button class="btn" id="redo">↷ Redo</button>
 <button class="btn" id="clear">ล้าง</button><select class="btn" id="exportFormat" aria-label="รูปแบบไฟล์"><option value="png">PNG</option><option value="jpeg">JPG</option></select><button class="btn primary" id="export">Export</button>
 </header>
@@ -289,7 +289,7 @@ function currentScale(){return document.querySelector('.canvas-wrap').getBoundin
 canvas.addEventListener('click',()=>{state.selected=null;propsOpen=false;render()});
 function isPropertyEditing(){
   const a=document.activeElement;
-  return !!a && (a.id==='ptext'||a.id==='pfs'||a.id==='pfont'||a.id==='pc'||a.id==='pbg'||a.id==='pfit'||a.id==='pzoom'||a.id==='px'||a.id==='py'||a.id==='pw'||a.id==='ph');
+  return !!a && (a.id==='ptext'||a.id==='pfs'||a.id==='pfont'||a.id==='pc'||a.id==='pbg'||a.id==='pfit'||a.id==='pzoom'||a.id==='ppad'||a.id==='px'||a.id==='py'||a.id==='pw'||a.id==='ph');
 }
 window.addEventListener('resize',()=>{ updateViewportHeight(); if(!isPropertyEditing()) render(); });
 function renderLayers(){
@@ -310,7 +310,7 @@ function renderProps(){
 <option value="text" ${it.fit==='text'?'selected':''}>พอดีกับข้อความอัตโนมัติ</option>
 <option value="full" ${it.fit==='full'?'selected':''}>เต็มความกว้าง</option>
 <option value="manual" ${it.fit==='manual'?'selected':''}>กำหนดกว้าง/สูงเอง</option>
-</select></div>`;
+</select></div><div class="field"><label>ระยะห่างบน–ล่างของข้อความ <span id="ppadval" class="small" style="float:right">${Number(it.pad)||0}px</span></label><input id="ppad" type="range" min="4" max="40" step="1" value="${Number(it.pad)||0}"></div>`;
  }
  html+=`<div class="row"><div class="field"><label>X</label><input id="px" type="number" value="${Math.round(it.x)}"></div><div class="field"><label>Y</label><input id="py" type="number" value="${Math.round(it.y)}"></div></div>
  <div class="row"><div class="field"><label>กว้าง</label><input id="pw" type="number" value="${Math.round(it.w)}"></div><div class="field"><label>สูง</label><input id="ph" type="number" value="${Math.round(it.h)}"></div></div>
@@ -333,6 +333,7 @@ function renderProps(){
  if(document.getElementById('pc'))bindv('pc',v=>{it.color=v;const z=document.getElementById('pcval');if(z)z.textContent=v});
  if(document.getElementById('pbg'))bindv('pbg',v=>{it.bg=v;const z=document.getElementById('pbgval');if(z)z.textContent=v});
  if(document.getElementById('pfit'))document.getElementById('pfit').onchange=()=>{it.fit=document.getElementById('pfit').value; if(it.fit==='full')it.w=Math.max(40,state.w-it.x); sync();};
+ if(document.getElementById('ppad')){const pq=document.getElementById('ppad'), pv=document.getElementById('ppadval'); const setPad=v=>{it.pad=Math.max(4,Math.min(40,Math.round(+v||4))); pq.value=it.pad; if(pv)pv.textContent=it.pad+'px'; sync();}; pq.oninput=()=>setPad(pq.value);}
  if(document.getElementById('pzoom')){const zq=document.getElementById('pzoom'), zv=document.getElementById('pzoomval'); const setZoom=v=>{it.zoom=Math.max(1,Math.min(3,+v||1));zq.value=it.zoom;zv.textContent=Math.round(it.zoom*100)+'%';sync()}; zq.oninput=()=>setZoom(zq.value); document.getElementById('zoomout').onclick=()=>setZoom(it.zoom-0.1); document.getElementById('zoomin').onclick=()=>setZoom(it.zoom+0.1);}
  ['px','py'].forEach(k=>bindv(k,v=>{
    const n=Math.max(0,+v||0);
@@ -415,7 +416,7 @@ function newId(){return Math.random().toString(36).slice(2)}
 function add(type,src=''){
  snap(); const it={id:newId(),type,x:40,y:40,w:type==='bar'?500:360,h:type==='bar'?100:240,locked:false};
  if(type==='text'){it.text='ข่าวเด่นวันนี้';it.fontSize=64;it.color='#ffffff';it.font='Kanit'}
- if(type==='bar'){it.text='ข่าวเด่นวันนี้';it.fontSize=64;it.color='#111111';it.bg='#ffe500';it.font='Kanit';it.fit='text';it.pad=14;it.padX=18}
+ if(type==='bar'){it.text='ข่าวเด่นวันนี้';it.fontSize=64;it.color='#111111';it.bg='#ffe500';it.font='Kanit';it.fit='text';it.pad=22;it.padX=18}
  if(type==='image'||type==='logo'){it.src=src;it.w=type==='logo'?260:900;it.h=type==='logo'?160:600}
  state.items.push(it);state.selected=it.id;render()
 }
