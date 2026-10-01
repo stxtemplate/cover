@@ -1,3 +1,3 @@
-# Template Studio Web V56
+# Template Studio Online V57
 
-ปรับ UI ขนาดตัวอักษรเป็น ปุ่ม − / slider / ＋ ตามที่ต้องการ
+V57 fixes the mobile top toolbar so all five controls (Undo, Redo, Clear, PNG/JPG, Export) remain visible on one row. V56 features are retained, including the font-size minus/slider/plus control and PNG/JPG export.

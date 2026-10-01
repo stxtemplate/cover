@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Template Studio Online V54</title>
+<title>Template Studio Online V58</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;600;700;800&family=Noto+Sans+Thai:wght@400;500;600;700;800&family=Prompt:wght@400;500;600;700;800&family=Sarabun:wght@400;500;600;700&display=swap');
 *{box-sizing:border-box}body{margin:0;font-family:Arial,"Noto Sans Thai",sans-serif;background:#eef1f5;color:#18202a}
@@ -20,10 +20,10 @@ input[type=color]{width:100%;height:36px;border:0;background:none;padding:0}
   .mobile-tools .tool span{display:block;font-size:10px;margin-top:2px}
 }
 @media(max-width:900px){
-  .top{height:92px;min-height:92px;display:grid;grid-template-columns:1fr 1fr 1fr auto;grid-template-rows:34px 48px;gap:4px;padding:4px 8px;align-items:center}
+  .top{height:92px;min-height:92px;display:grid;grid-template-columns:repeat(5,minmax(0,1fr));grid-template-rows:34px 48px;gap:4px;padding:4px 8px;align-items:center}
   .brand{grid-column:1 / -1;width:auto;margin:0;font-size:16px;line-height:1}
-  .top .btn{padding:5px 8px;min-height:40px;font-size:15px}
-  .top .primary{font-size:15px}
+  .top .btn{padding:5px 4px;min-height:40px;font-size:15px;width:100%;min-width:0;white-space:nowrap}
+  .top .primary{font-size:15px;min-width:0}
   .left{display:none}
   .right{display:none;position:fixed;left:0;right:0;bottom:68px;width:100%;max-height:34dvh;background:#fff;border-left:0;border-top:1px solid #d9dee5;padding:10px 12px;overflow:auto;z-index:90;box-shadow:0 -6px 20px #0001}
   .right.props-open{display:block}
@@ -51,7 +51,7 @@ input[type=color]{width:100%;height:36px;border:0;background:none;padding:0}
 <body>
 <div class="app">
 <header class="top">
-<div class="brand">Template Studio Online V54</div>
+<div class="brand">Template Studio Online V58</div>
 <button class="btn" id="undo">↶ Undo</button><button class="btn" id="redo">↷ Redo</button>
 <button class="btn" id="clear">ล้าง</button><select class="btn" id="exportFormat" aria-label="รูปแบบไฟล์"><option value="png">PNG</option><option value="jpeg">JPG</option></select><button class="btn primary" id="export">Export</button>
 </header>
@@ -603,12 +603,19 @@ function applyViewZoomStyles(){
   // place it in a real scrollable area so both horizontal and vertical panning
   // have physical scroll range instead of being clipped by the flex container.
   const pad=12;
-  const left=Math.max(pad, (stage.clientWidth-width)/2);
-  const top=Math.max(pad, (stage.clientHeight-height)/2);
-  wrap.style.marginLeft=left+'px';
-  wrap.style.marginTop=top+'px';
-  wrap.style.marginRight=pad+'px';
-  wrap.style.marginBottom=pad+'px';
+  // Keep the design centered between the left/right panels while it fits.
+  // Explicit left/right margins were previously adding extra space to the
+  // flex item and visually pushing the canvas too far to the right.
+  if(viewZoom <= 1.001){
+    wrap.style.margin='auto';
+  }else{
+    const left=Math.max(pad, (stage.clientWidth-width)/2);
+    const top=Math.max(pad, (stage.clientHeight-height)/2);
+    wrap.style.marginLeft=left+'px';
+    wrap.style.marginTop=top+'px';
+    wrap.style.marginRight=pad+'px';
+    wrap.style.marginBottom=pad+'px';
+  }
   document.querySelector('.stage').classList.toggle('zoomed',viewZoom>1.001);
 }
 function setViewZoom(v, focusX=null, focusY=null, redraw=false){
