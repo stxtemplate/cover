@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Template Studio Online V63</title>
+<title>Template Studio Online V64</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;600;700;800&family=Noto+Sans+Thai:wght@400;500;600;700;800&family=Prompt:wght@400;500;600;700;800&family=Sarabun:wght@400;500;600;700&display=swap');
 *{box-sizing:border-box}body{margin:0;font-family:Arial,"Noto Sans Thai",sans-serif;background:#eef1f5;color:#18202a}
@@ -11,7 +11,7 @@
 button,select,input{font:inherit}.btn{border:1px solid #d3d9e1;background:#fff;border-radius:8px;padding:8px 12px;cursor:pointer}.btn:hover{background:#f3f5f8}.primary{background:#1769e0;color:white;border-color:#1769e0}
 .body{display:flex;min-height:0;flex:1}.left,.right{width:245px;background:#fff;border-right:1px solid #d9dee5;padding:14px;overflow:auto}.right{border-right:0;border-left:1px solid #d9dee5;width:270px}.tools{display:grid;grid-template-columns:1fr 1fr;gap:9px}.tool{padding:13px 8px;border:1px solid #dce1e8;border-radius:10px;background:#fafbfc;cursor:pointer;text-align:center}.tool:hover{border-color:#1769e0}.hint{font-size:12px;color:#6d7784;line-height:1.5;margin:14px 2px}.stage{flex:1;display:flex;align-items:center;justify-content:center;overflow:auto;padding:25px;background:#dfe4ea}
 .canvas-wrap{position:relative;touch-action:none;-webkit-user-select:none;user-select:none;box-shadow:0 10px 30px #0002;background:white;flex:none}.canvas{position:relative;overflow:hidden;background:#fff;user-select:none;touch-action:none;-webkit-touch-callout:none}.center-guide{position:absolute;z-index:9999;pointer-events:none;display:none}.center-guide.v{top:0;bottom:0;width:1px;background:#1769e0;opacity:.65}.center-guide.h{left:0;right:0;height:1px;background:#1769e0;opacity:.65}.center-guide.show{display:block}
-.item{position:absolute;cursor:move;touch-action:none;-webkit-user-select:none;user-select:none}.item.selected{outline:2px solid #1769e0;outline-offset:2px}.item.locked{cursor:not-allowed}.item img{display:block;width:100%;height:100%;object-fit:contain;pointer-events:none;-webkit-user-drag:none}.text-item{white-space:pre;line-height:1.08;font-weight:700;width:max-content!important;height:auto!important;max-width:none!important}.bar-item{background:#ffe500;padding:8px 14px;white-space:pre-wrap;line-height:1.08;font-weight:800}.logo-item img{object-fit:contain}.image-item{overflow:hidden}.image-item img{object-fit:cover;transform-origin:center center}.resize{position:absolute;width:20px;height:20px;background:#1769e0;border:2px solid #fff;border-radius:50%;right:-10px;bottom:-10px;cursor:nwse-resize;display:none}.selected .resize{display:block}.panel-title{font-weight:800;margin:4px 0 12px}.field{margin:10px 0}.field label{display:block;font-size:12px;color:#697381;margin-bottom:5px}.field input[type=text],.field input[type=number],.field select{width:100%;padding:8px;border:1px solid #d6dce4;border-radius:7px}.row{display:flex;gap:7px}.row>*{flex:1}.font-size-control{display:grid;grid-template-columns:1fr minmax(90px,1.8fr) 1fr;gap:8px;align-items:center}.font-size-control input[type=range]{width:100%;margin:0;accent-color:#1769e0}.font-size-btn{height:40px;padding:4px 10px;font-size:20px;line-height:1}.layers{display:flex;flex-direction:column;gap:6px}.layer{padding:9px;border:1px solid #dde2e8;border-radius:8px;display:flex;align-items:center;gap:7px;cursor:pointer}.layer.active{border-color:#1769e0;background:#edf4ff}.small{font-size:12px;color:#65707c}.colorbox{display:flex;align-items:center;gap:8px;border:1px solid #d6dce4;border-radius:7px;padding:4px 7px;background:#fff}.colorbox input[type=color]{width:42px;height:32px;flex:none;border:0;padding:0;background:transparent}.colorbox span{font-size:12px;color:#4f5965;font-family:monospace}.empty{color:#88919c;font-size:13px}
+.item{position:absolute;cursor:move;touch-action:none;-webkit-user-select:none;user-select:none}.item.selected{outline:2px solid #1769e0;outline-offset:2px}.item.locked{cursor:not-allowed}.item img{display:block;width:100%;height:100%;object-fit:contain;pointer-events:none;-webkit-user-drag:none}.text-item{white-space:pre;line-height:1.08;font-weight:700;width:max-content!important;height:auto!important;max-width:none!important}.bar-item{background:#ffe500;padding:8px 14px;white-space:pre-wrap;line-height:1.08;font-weight:800}.logo-item img{object-fit:contain}.image-item{overflow:hidden}.image-item img{object-fit:cover;transform-origin:center center}.resize{position:absolute;width:20px;height:20px;background:#1769e0;border:2px solid #fff;border-radius:50%;right:-10px;bottom:-10px;cursor:nwse-resize;display:none}.selected .resize{display:block}.panel-title{font-weight:800;margin:4px 0 12px}.field{margin:10px 0}.field label{display:block;font-size:12px;color:#697381;margin-bottom:5px}.field input[type=text],.field input[type=number],.field select{width:100%;padding:8px;border:1px solid #d6dce4;border-radius:7px}.row{display:flex;gap:7px}.row>*{flex:1}.font-size-control{display:grid;grid-template-columns:1fr minmax(90px,1.8fr) 1fr;gap:8px;align-items:center}.font-size-control input[type=range]{width:100%;margin:0;accent-color:#1769e0}.font-size-btn{height:40px;padding:4px 10px;font-size:20px;line-height:1}.layers{display:flex;flex-direction:column;gap:6px}.layer{padding:7px 8px;border:1px solid #dde2e8;border-radius:8px;display:flex;align-items:center;gap:7px;cursor:pointer;background:#fff}.layer.active{border-color:#1769e0;background:#edf4ff}.layer.dragging{opacity:.45}.layer-name{flex:1;min-width:0;line-height:1.25}.layer-actions{display:flex;gap:3px;flex:none}.layer-actions button{border:1px solid #d6dce4;background:#fff;border-radius:6px;width:30px;height:30px;cursor:pointer}.layer-actions button:disabled{opacity:.35;cursor:not-allowed}.small{font-size:12px;color:#65707c}.colorbox{display:flex;align-items:center;gap:8px;border:1px solid #d6dce4;border-radius:7px;padding:4px 7px;background:#fff}.colorbox input[type=color]{width:42px;height:32px;flex:none;border:0;padding:0;background:transparent}.colorbox span{font-size:12px;color:#4f5965;font-family:monospace}.empty{color:#88919c;font-size:13px}
 input[type=color]{width:100%;height:36px;border:0;background:none;padding:0}
 .mobile-tools{display:none}
 @media(max-width:900px){
@@ -51,9 +51,9 @@ input[type=color]{width:100%;height:36px;border:0;background:none;padding:0}
 <body>
 <div class="app">
 <header class="top">
-<div class="brand">Template Studio Online V63</div>
+<div class="brand">Template Studio Online V64</div>
 <button class="btn" id="undo">↶ Undo</button><button class="btn" id="redo">↷ Redo</button>
-<button class="btn" id="clear">ล้าง</button><select class="btn" id="exportFormat" aria-label="รูปแบบไฟล์"><option value="png">PNG</option><option value="jpeg">JPG</option></select><button class="btn primary" id="export">Export</button>
+<button class="btn" id="clear">ล้าง</button><button class="btn" id="loadLatest" title="โหลดงานล่าสุด">↻ ล่าสุด</button><select class="btn" id="exportFormat" aria-label="รูปแบบไฟล์"><option value="png">PNG</option><option value="jpeg">JPG</option></select><button class="btn primary" id="export">Export</button>
 </header>
 <div class="body">
 <aside class="left">
@@ -104,6 +104,22 @@ function hideCenterGuides(){showCenterGuides(false,false)}
 let state={w:1080,h:1350,items:[],selected:null}, history=[], future=[], pending=null;
 let viewZoom=1;
 let propsOpen=false;
+const DRAFT_KEY='templateStudioLatestDraftV64';
+function saveDraft(){
+  try{
+    const draft=JSON.parse(JSON.stringify(state));
+    draft.selected=null;
+    localStorage.setItem(DRAFT_KEY,JSON.stringify(draft));
+  }catch(e){ console.warn('บันทึกงานล่าสุดไม่ได้',e); }
+}
+function loadDraft(){
+  try{
+    const raw=localStorage.getItem(DRAFT_KEY); if(!raw)return false;
+    const d=JSON.parse(raw); if(!d || !Array.isArray(d.items))return false;
+    state={w:Number(d.w)||1080,h:Number(d.h)||1350,items:d.items,selected:null};
+    return true;
+  }catch(e){return false}
+}
 
 
 let customFonts = JSON.parse(localStorage.getItem('templateStudioFonts') || '[]');
@@ -164,7 +180,12 @@ function render(){
   document.querySelector('.stage').classList.toggle('zoomed',viewZoom>1.001);
   canvas.innerHTML='';
   canvas.appendChild(vGuide); canvas.appendChild(hGuide);
-  state.items.forEach((it,i)=>{
+  const renderItems=[...state.items].sort((a,b)=>{
+    if(a.type==='image' && b.type!=='image') return -1;
+    if(a.type!=='image' && b.type==='image') return 1;
+    return state.items.indexOf(a)-state.items.indexOf(b);
+  });
+  renderItems.forEach((it,i)=>{
     const el=document.createElement('div'); el.className='item '+it.type+'-item'+(state.selected===it.id?' selected':'')+(it.locked?' locked':'');
     el.dataset.id=it.id; el.style.left=it.x+'px';el.style.top=it.y+'px';el.style.width=it.w+'px';el.style.height=it.h+'px';el.style.zIndex=i;
     if(it.type==='text'){
@@ -189,6 +210,7 @@ function render(){
   right.classList.toggle('props-open', isMobile && propsOpen);
   right.classList.toggle('has-selection', !!state.selected);
   document.documentElement.style.setProperty('--props-h','0px');
+  saveDraft();
   applyViewZoomStyles();
 }
 function fitBar(it,el){
@@ -293,8 +315,53 @@ function isPropertyEditing(){
 }
 window.addEventListener('resize',()=>{ updateViewportHeight(); if(!isPropertyEditing()) render(); });
 function renderLayers(){
- layers.innerHTML='';
- [...state.items].reverse().forEach(it=>{const d=document.createElement('div');d.className='layer'+(state.selected===it.id?' active':'');d.textContent=(it.type==='image'?'🖼️ ':it.type==='logo'?'🏷️ ':it.type==='bar'?'🟨 ':'T ')+(it.text||it.type);d.onclick=()=>{state.selected=it.id;render()};layers.appendChild(d)})
+  layers.innerHTML='';
+  const visible=[...state.items].sort((a,b)=>{
+    if(a.type==='image' && b.type!=='image') return 1;
+    if(a.type!=='image' && b.type==='image') return -1;
+    return state.items.indexOf(b)-state.items.indexOf(a);
+  });
+  visible.forEach((it,displayIndex)=>{
+    const d=document.createElement('div');
+    d.className='layer'+(state.selected===it.id?' active':'');
+    d.draggable=it.type!=='image';
+    const icon=it.type==='image'?'🖼️ ':it.type==='logo'?'🏷️ ':it.type==='bar'?'🟨 ':'T ';
+    d.innerHTML=`<div class="layer-name">${icon}${esc(it.text||it.type)}</div><div class="layer-actions"><button type="button" title="เลื่อนขึ้น">▲</button><button type="button" title="เลื่อนลง">▼</button></div>`;
+    d.onclick=()=>{state.selected=it.id;render()};
+    const [up,down]=d.querySelectorAll('button');
+    const nonImages=state.items.filter(x=>x.type!=='image');
+    const pos=nonImages.findIndex(x=>x.id===it.id);
+    if(it.type==='image'){up.disabled=true;down.disabled=true;}
+    else{
+      up.disabled=pos===nonImages.length-1;
+      down.disabled=pos===0;
+      up.onclick=e=>{e.stopPropagation();reorderLayer(it.id,1)};
+      down.onclick=e=>{e.stopPropagation();reorderLayer(it.id,-1)};
+    }
+    if(it.type!=='image'){
+      d.addEventListener('dragstart',()=>{d.classList.add('dragging');d.dataset.dragId=it.id});
+      d.addEventListener('dragend',()=>d.classList.remove('dragging'));
+      d.addEventListener('dragover',e=>{e.preventDefault();});
+      d.addEventListener('drop',e=>{e.preventDefault();const from=d.dataset.dragId||document.querySelector('.layer.dragging')?.dataset.dragId;if(from && from!==it.id)reorderLayerBefore(from,it.id)});
+    }
+    layers.appendChild(d);
+  });
+}
+function reorderLayer(id,dir){
+  const idx=state.items.findIndex(x=>x.id===id); if(idx<0)return;
+  if(state.items[idx].type==='image')return;
+  const movable=state.items.map((x,i)=>({x,i})).filter(o=>o.x.type!=='image');
+  const p=movable.findIndex(o=>o.x.id===id); const q=p+dir;
+  if(p<0||q<0||q>=movable.length)return;
+  snap();
+  const a=movable[p].i,b=movable[q].i; [state.items[a],state.items[b]]=[state.items[b],state.items[a]];
+  render();
+}
+function reorderLayerBefore(fromId,toId){
+  const from=state.items.findIndex(x=>x.id===fromId), to=state.items.findIndex(x=>x.id===toId);
+  if(from<0||to<0||state.items[from].type==='image'||state.items[to].type==='image')return;
+  snap();
+  const [item]=state.items.splice(from,1); const target=state.items.findIndex(x=>x.id===toId); state.items.splice(target,0,item); render();
 }
 function renderProps(){
  const it=state.items.find(x=>x.id===state.selected);
@@ -434,6 +501,15 @@ function handleImageFile(f,type){
     img.onload=()=>{
       let w=img.naturalWidth||1080,h=img.naturalHeight||1350;
       if(kind==='image'){
+        // There is one background/design image. Choosing another image replaces it
+        // instead of adding a small second image above the design.
+        const target=state.items.find(x=>x.id===state.selected && x.type==='image') || state.items.find(x=>x.type==='image');
+        if(target){
+          snap();
+          target.src=src; target.zoom=1;
+          target.x=0; target.y=0; target.w=state.w; target.h=state.h;
+          state.selected=target.id; render(); pending=null; return;
+        }
         const s=Math.max(state.w/w,state.h/h); w*=s; h*=s;
       }
       if(kind==='logo'){
@@ -469,15 +545,12 @@ function addFrom(type,src,nw,nh){
     // smaller overlays so they never hide existing text/logo layers.
     const hasImage=state.items.some(x=>x.type==='image');
     if(!hasImage){
-      const s=Math.max(state.w/iw,state.h/ih);
-      it.w=Math.ceil(iw*s); it.h=Math.ceil(ih*s);
-      it.x=Math.round((state.w-it.w)/2); it.y=Math.round((state.h-it.h)/2);
+      // Background image always fills the whole canvas; object-fit:cover handles cropping.
+      it.w=state.w; it.h=state.h; it.x=0; it.y=0;
     }else{
-      const maxW=state.w*0.55, maxH=state.h*0.40;
-      const s=Math.min(maxW/iw,maxH/ih,1);
-      it.w=Math.max(80,Math.round(iw*s)); it.h=Math.max(60,Math.round(ih*s));
-      const n=state.items.filter(x=>x.type==='image').length;
-      it.x=Math.min(state.w-it.w,60+n*30); it.y=Math.min(state.h-it.h,80+n*30);
+      // Safety fallback: replace the existing background instead of creating an overlay.
+      const target=state.items.find(x=>x.type==='image');
+      if(target){target.src=src;target.zoom=1;target.x=0;target.y=0;target.w=state.w;target.h=state.h;state.selected=target.id;render();return;}
     }
   }
   state.items.push(it);
@@ -485,9 +558,11 @@ function addFrom(type,src,nw,nh){
   render();
 }
 document.getElementById('size').onchange=e=>{snap();[state.w,state.h]=e.target.value.split('x').map(Number);render()}
+function syncSizeSelect(){const q=document.getElementById('size'); if(q)q.value=state.w+'x'+state.h}
 document.getElementById('undo').onclick=()=>{if(history.length){future.push(JSON.stringify(state));restore(history.pop())}}
 document.getElementById('redo').onclick=()=>{if(future.length){history.push(JSON.stringify(state));restore(future.pop())}}
 document.getElementById('clear').onclick=()=>{snap();state.items=[];state.selected=null;render()}
+document.getElementById('loadLatest').onclick=()=>{if(loadDraft()){syncSizeSelect();render()}else alert('ยังไม่มีงานล่าสุดที่บันทึกไว้')}
 document.getElementById('export').onclick=()=>exportImage();
 async function exportImage(){
   const format=document.getElementById('exportFormat')?.value||'png';
@@ -713,6 +788,8 @@ const endTouch=()=>{if(pinchActive){pinchActive=false;applyViewZoomStyles();} pa
 stage.addEventListener('touchend',endTouch,{passive:false,capture:true});
 stage.addEventListener('touchcancel',endTouch,{passive:false,capture:true});
 
+loadDraft();
+syncSizeSelect();
 render();
 </script>
 </body></html>

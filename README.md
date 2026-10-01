@@ -1,5 +1,10 @@
-# Template Studio Online V62
+# Template Studio Online V64
 
-- เพิ่มขนาดงานสำเร็จรูปสำหรับ TikTok / Reels / YouTube / Facebook / X / LinkedIn / Pinterest / LINE และขนาด Social ทั่วไป
-- ค่าเริ่มต้นยังคง 1080 × 1350
-- ค่า Default สีเดิม: Text ธรรมดา #ffffff, Bar #ffe500, Text บน Bar #111111
+Changes from V63:
+- Layers can be reordered with ▲/▼ controls and drag-and-drop for non-background elements.
+- Background image is always rendered behind all other elements.
+- Adding/selecting an image now replaces the existing background image instead of creating a small overlay image.
+- Background image fills the full canvas; object-fit: cover keeps the canvas filled.
+- Latest design is automatically saved to localStorage and restored when the page is reopened.
+- Added a "↻ ล่าสุด" button on desktop to load the latest saved design manually.
+- Existing defaults and V63 features are retained.
