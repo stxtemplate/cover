@@ -1,10 +1,11 @@
-# Template Studio Online V64
+# Template Studio Online V65
 
-Changes from V63:
-- Layers can be reordered with ▲/▼ controls and drag-and-drop for non-background elements.
-- Background image is always rendered behind all other elements.
-- Adding/selecting an image now replaces the existing background image instead of creating a small overlay image.
-- Background image fills the full canvas; object-fit: cover keeps the canvas filled.
-- Latest design is automatically saved to localStorage and restored when the page is reopened.
-- Added a "↻ ล่าสุด" button on desktop to load the latest saved design manually.
-- Existing defaults and V63 features are retained.
+V65 adds a bottom-to-top transparent black gradient overlay layer for improving text readability over background images.
+
+- Add "ไล่เฉดดำ" layer
+- Default: black gradient, transparent at top and 85% black at bottom
+- Default height: 45% of canvas
+- Adjustable opacity and height in Properties
+- Gradient is pinned between the background image and other design elements
+- Export to PNG/JPG includes the gradient
+- Existing defaults remain unchanged
