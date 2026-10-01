@@ -1,3 +1,3 @@
-# Template Studio Online V60
+# Template Studio Online V61
 
-V60: changed the default text-bar background color to #ffe500. Existing saved bar colors are preserved.
+V61: default plain text color is #ffffff. Text on bars remains #000000, and bar background remains #ffe500.
