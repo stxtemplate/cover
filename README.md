@@ -1,3 +1,7 @@
-# Template Studio Online V66
+# Template Studio Web V70
 
-V66 fixes mobile Properties/Layers visibility. On mobile, the Properties panel can use more vertical space and the Layers list is visible and scrollable instead of being hidden.
+ต่อยอดจาก V68 โดยเพิ่มรูปแบบกรอบ Overlay Image และคงระบบหมุนภาพ/จุดจับหมุนเดิม
+
+กรอบ: สี่เหลี่ยม, มุมมน, วงกลม, วงรี, แนวนอน, แนวตั้ง, ข้าวหลามตัด, หกเหลี่ยม, ตัดมุม
+
+หมายเหตุ: กรอบรูปทรงพิเศษใช้ clip-path ในหน้าเว็บ และวาดซ้ำเป็น path ตอน Export PNG/JPG

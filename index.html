@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Template Studio Online V66</title>
+<title>Template Studio Online V69</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;600;700;800&family=Noto+Sans+Thai:wght@400;500;600;700;800&family=Prompt:wght@400;500;600;700;800&family=Sarabun:wght@400;500;600;700&display=swap');
 *{box-sizing:border-box}body{margin:0;font-family:Arial,"Noto Sans Thai",sans-serif;background:#eef1f5;color:#18202a}
@@ -12,11 +12,11 @@ button,select,input{font:inherit}.btn{border:1px solid #d3d9e1;background:#fff;b
 .body{display:flex;min-height:0;flex:1}.left,.right{width:245px;background:#fff;border-right:1px solid #d9dee5;padding:14px;overflow:auto}.right{border-right:0;border-left:1px solid #d9dee5;width:270px}.tools{display:grid;grid-template-columns:1fr 1fr;gap:9px}.tool{padding:13px 8px;border:1px solid #dce1e8;border-radius:10px;background:#fafbfc;cursor:pointer;text-align:center}.tool:hover{border-color:#1769e0}.hint{font-size:12px;color:#6d7784;line-height:1.5;margin:14px 2px}.stage{flex:1;display:flex;align-items:center;justify-content:center;overflow:auto;padding:25px;background:#dfe4ea}
 .canvas-wrap{position:relative;touch-action:none;-webkit-user-select:none;user-select:none;box-shadow:0 10px 30px #0002;background:white;flex:none}.canvas{position:relative;overflow:hidden;background:#fff;user-select:none;touch-action:none;-webkit-touch-callout:none}.center-guide{position:absolute;z-index:9999;pointer-events:none;display:none}.center-guide.v{top:0;bottom:0;width:1px;background:#1769e0;opacity:.65}.center-guide.h{left:0;right:0;height:1px;background:#1769e0;opacity:.65}.center-guide.show{display:block}
 .item{position:absolute;cursor:move;touch-action:none;-webkit-user-select:none;user-select:none}.item.selected{outline:2px solid #1769e0;outline-offset:2px}.item.locked{cursor:not-allowed}.item img{display:block;width:100%;height:100%;object-fit:contain;pointer-events:none;-webkit-user-drag:none}.text-item{white-space:pre;line-height:1.08;font-weight:700;width:max-content!important;height:auto!important;max-width:none!important}.gradient-item{pointer-events:none;background:linear-gradient(to bottom,rgba(0,0,0,0) 0%,rgba(0,0,0,.88) 100%);}
-.bar-item{background:#ffe500;padding:8px 14px;white-space:pre-wrap;line-height:1.08;font-weight:800}.logo-item img{object-fit:contain}.image-item{overflow:hidden}.image-item img{object-fit:cover;transform-origin:center center}.resize{position:absolute;width:20px;height:20px;background:#1769e0;border:2px solid #fff;border-radius:50%;right:-10px;bottom:-10px;cursor:nwse-resize;display:none}.selected .resize{display:block}.panel-title{font-weight:800;margin:4px 0 12px}.field{margin:10px 0}.field label{display:block;font-size:12px;color:#697381;margin-bottom:5px}.field input[type=text],.field input[type=number],.field select{width:100%;padding:8px;border:1px solid #d6dce4;border-radius:7px}.row{display:flex;gap:7px}.row>*{flex:1}.font-size-control{display:grid;grid-template-columns:1fr minmax(90px,1.8fr) 1fr;gap:8px;align-items:center}.font-size-control input[type=range]{width:100%;margin:0;accent-color:#1769e0}.font-size-btn{height:40px;padding:4px 10px;font-size:20px;line-height:1}.layers{display:flex;flex-direction:column;gap:6px}.layer{padding:7px 8px;border:1px solid #dde2e8;border-radius:8px;display:flex;align-items:center;gap:7px;cursor:pointer;background:#fff}.layer.active{border-color:#1769e0;background:#edf4ff}.layer.dragging{opacity:.45}.layer-name{flex:1;min-width:0;line-height:1.25}.layer-actions{display:flex;gap:3px;flex:none}.layer-actions button{border:1px solid #d6dce4;background:#fff;border-radius:6px;width:30px;height:30px;cursor:pointer}.layer-actions button:disabled{opacity:.35;cursor:not-allowed}.small{font-size:12px;color:#65707c}.colorbox{display:flex;align-items:center;gap:8px;border:1px solid #d6dce4;border-radius:7px;padding:4px 7px;background:#fff}.colorbox input[type=color]{width:42px;height:32px;flex:none;border:0;padding:0;background:transparent}.colorbox span{font-size:12px;color:#4f5965;font-family:monospace}.empty{color:#88919c;font-size:13px}
+.bar-item{background:#ffe500;padding:8px 14px;white-space:pre-wrap;line-height:1.08;font-weight:800}.logo-item img{object-fit:contain}.image-item{overflow:hidden}.image-item img{object-fit:cover;transform-origin:center center}.overlay-item{overflow:hidden;background:#fff}.overlay-item img{width:100%;height:100%;object-fit:cover;display:block;transform-origin:center center}.overlay-item.shape-circle{border-radius:50%}.overlay-item.shape-rounded{border-radius:18%}.overlay-item.shape-square{border-radius:0}.overlay-item.shape-ellipse{border-radius:50%}.overlay-item.shape-horizontal,.overlay-item.shape-vertical{border-radius:0}.overlay-item.shape-diamond,.overlay-item.shape-hexagon,.overlay-item.shape-chamfer{border-radius:0;border:0!important}.overlay-item.shape-diamond{clip-path:polygon(50% 0,100% 50%,50% 100%,0 50%)}.overlay-item.shape-hexagon{clip-path:polygon(25% 0,75% 0,100% 50%,75% 100%,25% 100%,0 50%)}.overlay-item.shape-chamfer{clip-path:polygon(14% 0,86% 0,100% 14%,100% 86%,86% 100%,14% 100%,0 86%,0 14%)}.resize{position:absolute;width:20px;height:20px;background:#1769e0;border:2px solid #fff;border-radius:50%;right:-10px;bottom:-10px;cursor:nwse-resize;display:none}.selected .resize{display:block}.rotate{position:absolute;width:22px;height:22px;background:#fff;border:2px solid #1769e0;border-radius:50%;left:50%;top:-34px;transform:translateX(-50%);cursor:grab;display:none;z-index:20;box-shadow:0 1px 4px #0003}.rotate:after{content:"↻";display:block;color:#1769e0;font-size:15px;line-height:18px;text-align:center;font-weight:700}.selected .rotate{display:block}.rotate:active{cursor:grabbing}.panel-title{font-weight:800;margin:4px 0 12px}.field{margin:10px 0}.field label{display:block;font-size:12px;color:#697381;margin-bottom:5px}.field input[type=text],.field input[type=number],.field select{width:100%;padding:8px;border:1px solid #d6dce4;border-radius:7px}.row{display:flex;gap:7px}.row>*{flex:1}.font-size-control{display:grid;grid-template-columns:1fr minmax(90px,1.8fr) 1fr;gap:8px;align-items:center}.font-size-control input[type=range]{width:100%;margin:0;accent-color:#1769e0}.font-size-btn{height:40px;padding:4px 10px;font-size:20px;line-height:1}.layers{display:flex;flex-direction:column;gap:6px}.layer{padding:7px 8px;border:1px solid #dde2e8;border-radius:8px;display:flex;align-items:center;gap:7px;cursor:pointer;background:#fff}.layer.active{border-color:#1769e0;background:#edf4ff}.layer.dragging{opacity:.45}.layer-name{flex:1;min-width:0;line-height:1.25}.layer-actions{display:flex;gap:3px;flex:none}.layer-actions button{border:1px solid #d6dce4;background:#fff;border-radius:6px;width:30px;height:30px;cursor:pointer}.layer-actions button:disabled{opacity:.35;cursor:not-allowed}.small{font-size:12px;color:#65707c}.colorbox{display:flex;align-items:center;gap:8px;border:1px solid #d6dce4;border-radius:7px;padding:4px 7px;background:#fff}.colorbox input[type=color]{width:42px;height:32px;flex:none;border:0;padding:0;background:transparent}.colorbox span{font-size:12px;color:#4f5965;font-family:monospace}.empty{color:#88919c;font-size:13px}
 input[type=color]{width:100%;height:36px;border:0;background:none;padding:0}
 .mobile-tools{display:none}
 @media(max-width:900px){
-  .mobile-tools{display:grid;grid-template-columns:repeat(9,1fr);gap:4px;position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #d9dee5;padding:4px;z-index:100;height:68px}
+  .mobile-tools{display:grid;grid-template-columns:repeat(10,minmax(0,1fr));gap:4px;position:fixed;bottom:0;left:0;right:0;background:#fff;border-top:1px solid #d9dee5;padding:4px;z-index:100;height:68px}
   .mobile-tools .tool{padding:3px 2px;font-size:17px;border:1px solid #dde2e8;border-radius:8px;background:#fafbfc;line-height:1.0;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;touch-action:manipulation;min-height:58px}
   .mobile-tools .tool span{display:block;font-size:10px;margin-top:2px}
 }
@@ -53,7 +53,7 @@ input[type=color]{width:100%;height:36px;border:0;background:none;padding:0}
 <body>
 <div class="app">
 <header class="top">
-<div class="brand">Template Studio Online V66</div>
+<div class="brand">Template Studio Online V69</div>
 <button class="btn" id="undo">↶ Undo</button><button class="btn" id="redo">↷ Redo</button>
 <button class="btn" id="clear">ล้าง</button><button class="btn" id="loadLatest" title="โหลดงานล่าสุด">↻ ล่าสุด</button><select class="btn" id="exportFormat" aria-label="รูปแบบไฟล์"><option value="png">PNG</option><option value="jpeg">JPG</option></select><button class="btn primary" id="export">Export</button>
 </header>
@@ -62,6 +62,7 @@ input[type=color]{width:100%;height:36px;border:0;background:none;padding:0}
 <div class="panel-title">เพิ่มองค์ประกอบ</div>
 <div class="tools">
 <button class="tool" id="addImage">🖼️<br>ภาพ</button>
+<button class="tool" id="addOverlay">🖼️➕<br>ภาพซ้อน</button>
 <button class="tool" id="addText">T<br>ข้อความ</button>
 <button class="tool" id="addBar">🟨<br>แถบข้อความ</button>
 <button class="tool" id="addGradient">🌑<br>ไล่เฉดดำ</button>
@@ -83,11 +84,14 @@ input[type=color]{width:100%;height:36px;border:0;background:none;padding:0}
 </div>
 <input id="file" type="file" accept="image/*" hidden>
 <input id="mobileImageFile" type="file" accept="image/*" style="display:none">
+<input id="mobileOverlayFile" type="file" accept="image/*" style="display:none">
 <input id="mobileLogoFile" type="file" accept="image/*" style="display:none">
+<input id="overlayFile" type="file" accept="image/*" hidden>
 <input id="fontFile" type="file" accept=".ttf,.otf,.woff,.woff2,font/ttf,font/otf,font/woff,font/woff2" hidden>
 
 <div id="mobileTools" class="mobile-tools">
   <label class="tool" for="mobileImageFile">🖼️<span>ภาพ</span></label>
+  <label class="tool" for="mobileOverlayFile">🖼️➕<span>ภาพซ้อน</span></label>
   <button class="tool" id="mText">T<span>ข้อความ</span></button>
   <button class="tool" id="mBar">🟨<span>แถบ</span></button>
   <button class="tool" id="mGradient">🌑<span>ไล่เฉด</span></button>
@@ -108,7 +112,7 @@ function hideCenterGuides(){showCenterGuides(false,false)}
 let state={w:1080,h:1350,items:[],selected:null}, history=[], future=[], pending=null;
 let viewZoom=1;
 let propsOpen=false;
-const DRAFT_KEY='templateStudioLatestDraftV65';
+const DRAFT_KEY='templateStudioLatestDraftV69';
 function saveDraft(){
   try{
     const draft=JSON.parse(JSON.stringify(state));
@@ -120,7 +124,7 @@ function loadDraft(){
   try{
     const raw=localStorage.getItem(DRAFT_KEY); if(!raw)return false;
     const d=JSON.parse(raw); if(!d || !Array.isArray(d.items))return false;
-    state={w:Number(d.w)||1080,h:Number(d.h)||1350,items:d.items,selected:null};
+    state={w:Number(d.w)||1080,h:Number(d.h)||1350,items:d.items,selected:null}; state.items.forEach(it=>{if(it.rotation==null)it.rotation=0});
     return true;
   }catch(e){return false}
 }
@@ -185,7 +189,7 @@ function render(){
   canvas.innerHTML='';
   canvas.appendChild(vGuide); canvas.appendChild(hGuide);
   const renderItems=[...state.items].sort((a,b)=>{
-    const rank=t=>t==='image'?0:t==='gradient'?1:2;
+    const rank=t=>t==='image'?0:t==='gradient'?1:t==='overlay'?2:3;
     const ra=rank(a.type), rb=rank(b.type);
     if(ra!==rb) return ra-rb;
     return state.items.indexOf(a)-state.items.indexOf(b);
@@ -204,12 +208,16 @@ function render(){
     }
     if(it.type==='bar'){el.textContent=it.text;el.style.fontSize=it.fontSize+'px';el.style.color=it.color;el.style.fontFamily=it.font||'Kanit';el.style.textAlign=it.textAlign||'left';el.style.background=it.bg;el.style.padding=it.pad+'px '+it.padX+'px';fitBar(it,el)}
     if(it.type==='gradient'){el.style.background=`linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,${Math.max(0,Math.min(1,Number(it.opacity)||0.85))}) 100%)`;el.style.pointerEvents='none';}
-    if(it.type==='image'||it.type==='logo'){const im=document.createElement('img');im.src=it.src;im.draggable=false;el.appendChild(im);el.style.objectFit='contain';if(it.type==='image'){it.zoom=Number(it.zoom)||1;im.style.transform=`scale(${it.zoom})`;im.style.transformOrigin='center center';im.style.objectFit='cover'}}
+    if(it.type==='image'||it.type==='logo'||it.type==='overlay'){const im=document.createElement('img');im.src=it.src;im.draggable=false;el.appendChild(im);el.style.objectFit='contain';if(it.type==='image'){it.zoom=Number(it.zoom)||1;im.style.transform=`scale(${it.zoom})`;im.style.transformOrigin='center center';im.style.objectFit='cover'} if(it.type==='overlay'){const shape=it.shape||'circle';it.cropZoom=Number.isFinite(Number(it.cropZoom))?Number(it.cropZoom):1;it.cropX=Number.isFinite(Number(it.cropX))?Number(it.cropX):0;it.cropY=Number.isFinite(Number(it.cropY))?Number(it.cropY):0;el.classList.add('shape-'+shape);el.style.border=(Number(it.borderWidth)||0)+'px solid '+(it.borderColor||'#ffffff');el.style.borderRadius=shape==='circle'||shape==='ellipse'?'50%':shape==='rounded'?'18%':'0';el.style.overflow='hidden';im.style.objectFit='cover';im.style.width='100%';im.style.height='100%';im.style.transform=`translate(${it.cropX}%,${it.cropY}%) scale(${it.cropZoom})`}}
     const h=document.createElement('div');h.className='resize';
+    const rHandle=document.createElement('div'); rHandle.className='rotate';
     // Plain text is resized through font size/properties rather than a tiny corner handle.
     if(it.type!=='text' && it.type!=='gradient') el.appendChild(h);
+    if(it.type==='logo'||it.type==='overlay') el.appendChild(rHandle);
+    const rot=Number(it.rotation)||0;
+    if(it.type==='logo'||it.type==='overlay') el.style.transform=`rotate(${rot}deg)`;
     canvas.appendChild(el);
-    bind(el,it.type==='text'?null:h,it);
+    bind(el,it.type==='text'?null:h,it,rHandle);
   });
   renderLayers(); renderProps();
   const right=document.querySelector('.right');
@@ -233,18 +241,18 @@ function fitBar(it,el){
     el.style.height=it.h+'px';
   }
 }
-function bind(el,handle,it){
-  let dragging=false, resizing=false, pointerId=null;
-  let sx=0,sy=0,ox=0,oy=0,ow=0,oh=0;
+function bind(el,handle,it,rotateHandle=null){
+  let dragging=false, resizing=false, rotating=false, pointerId=null;
+  let sx=0,sy=0,ox=0,oy=0,ow=0,oh=0,rotationStart=0,angleStart=0;
   const cleanup=()=>{
     window.removeEventListener('pointermove',move);
     window.removeEventListener('pointerup',end);
     window.removeEventListener('pointercancel',end);
-    dragging=false; resizing=false; pointerId=null;
+    dragging=false; resizing=false; rotating=false; pointerId=null;
   };
   const move=ev=>{
     if(pointerId!==null && ev.pointerId!==pointerId)return;
-    if(!dragging && !resizing)return;
+    if(!dragging && !resizing && !rotating)return;
     ev.preventDefault();
     const sc=currentScale()||1;
     if(dragging){
@@ -268,11 +276,22 @@ function bind(el,handle,it){
       // while dragging, so the exact center is always visible.
       showCenterGuides(true,true);
       el.style.left=it.x+'px'; el.style.top=it.y+'px';
+    }else if(rotating){
+      const rect=el.getBoundingClientRect();
+      const cx=rect.left+rect.width/2, cy=rect.top+rect.height/2;
+      const angle=Math.atan2(ev.clientY-cy,ev.clientX-cx)*180/Math.PI;
+      let deg=rotationStart+(angle-angleStart);
+      while(deg>180)deg-=360; while(deg<-180)deg+=360;
+      const snapStep=15, snapRange=4;
+      const snapped=Math.round(deg/snapStep)*snapStep;
+      if(Math.abs(deg-snapped)<=snapRange) deg=snapped;
+      it.rotation=Math.round(deg*10)/10;
+      el.style.transform=`rotate(${it.rotation}deg)`;
     }else if(resizing){
       const dw=(ev.clientX-sx)/sc;
       const dh=(ev.clientY-sy)/sc;
-      if(it.type==='logo'){
-        // Keep logo proportions locked while resizing from the bottom-right handle.
+      if(it.type==='logo'||it.type==='overlay'){
+        // Keep logo/overlay proportions locked while resizing from the bottom-right handle.
         // The ratio is captured from the original image when the logo is added.
         const ratio=Number(it.aspectRatio)||(ow/Math.max(1,oh));
         const nw=Math.max(40,ow+dw);
@@ -311,6 +330,19 @@ function bind(el,handle,it){
     window.addEventListener('pointerup',end,{passive:false});
     window.addEventListener('pointercancel',end,{passive:false});
   });
+  if(rotateHandle) rotateHandle.addEventListener('pointerdown',e=>{
+    if(it.locked)return;
+    e.preventDefault(); e.stopPropagation();
+    state.selected=it.id; rotating=true; pointerId=e.pointerId;
+    const rect=el.getBoundingClientRect();
+    const cx=rect.left+rect.width/2, cy=rect.top+rect.height/2;
+    angleStart=Math.atan2(e.clientY-cy,e.clientX-cx)*180/Math.PI;
+    rotationStart=Number(it.rotation)||0;
+    try{rotateHandle.setPointerCapture(e.pointerId)}catch(_){}
+    window.addEventListener('pointermove',move,{passive:false});
+    window.addEventListener('pointerup',end,{passive:false});
+    window.addEventListener('pointercancel',end,{passive:false});
+  });
   el.addEventListener('click',e=>{e.stopPropagation();hideCenterGuides();state.selected=it.id;render()});
 }
 function currentScale(){return document.querySelector('.canvas-wrap').getBoundingClientRect().width/state.w}
@@ -323,7 +355,7 @@ window.addEventListener('resize',()=>{ updateViewportHeight(); if(!isPropertyEdi
 function renderLayers(){
   layers.innerHTML='';
   const visible=[...state.items].sort((a,b)=>{
-    const rank=t=>t==='image'?0:t==='gradient'?1:2;
+    const rank=t=>t==='image'?0:t==='gradient'?1:t==='overlay'?2:3;
     const ra=rank(a.type), rb=rank(b.type);
     if(ra!==rb) return rb-ra;
     return state.items.indexOf(b)-state.items.indexOf(a);
@@ -332,7 +364,7 @@ function renderLayers(){
     const d=document.createElement('div');
     d.className='layer'+(state.selected===it.id?' active':'');
     d.draggable=it.type!=='image';
-    const icon=it.type==='image'?'🖼️ ':it.type==='gradient'?'🌑 ':it.type==='logo'?'🏷️ ':it.type==='bar'?'🟨 ':'T ';
+    const icon=it.type==='image'?'🖼️ ':it.type==='gradient'?'🌑 ':it.type==='overlay'?'🖼️➕ ':it.type==='logo'?'🏷️ ':it.type==='bar'?'🟨 ':'T ';
     d.innerHTML=`<div class="layer-name">${icon}${esc(it.text||it.type)}</div><div class="layer-actions"><button type="button" title="เลื่อนขึ้น">▲</button><button type="button" title="เลื่อนลง">▼</button></div>`;
     d.onclick=()=>{state.selected=it.id;render()};
     const [up,down]=d.querySelectorAll('button');
@@ -376,6 +408,7 @@ function renderProps(){
  document.querySelector('.right')?.classList.add('has-selection');
  let html=`<div class="small">${it.type.toUpperCase()}</div>`;
  if(it.type==='image'){it.zoom=Number(it.zoom)||1; html+=`<div class="field"><label>Zoom ภาพ <span id="pzoomval">${Math.round(it.zoom*100)}%</span></label><div class="row"><button class="btn" id="zoomout" type="button">−</button><input id="pzoom" type="range" min="1" max="3" step="0.05" value="${it.zoom}" style="width:100%"><button class="btn" id="zoomin" type="button">＋</button></div></div>`;}
+ if(it.type==='overlay'){it.shape=it.shape||'circle';it.borderWidth=Number.isFinite(Number(it.borderWidth))?Number(it.borderWidth):6;it.borderColor=it.borderColor||'#ffffff';it.cropZoom=Number.isFinite(Number(it.cropZoom))?Number(it.cropZoom):1;it.cropX=Number.isFinite(Number(it.cropX))?Number(it.cropX):0;it.cropY=Number.isFinite(Number(it.cropY))?Number(it.cropY):0;html+=`<div class="field"><label>รูปแบบกรอบ</label><select id="oshape"><option value="square" ${it.shape==='square'?'selected':''}>สี่เหลี่ยม</option><option value="rounded" ${it.shape==='rounded'?'selected':''}>สี่เหลี่ยมมุมมน</option><option value="circle" ${it.shape==='circle'?'selected':''}>วงกลม</option><option value="ellipse" ${it.shape==='ellipse'?'selected':''}>วงรี</option><option value="horizontal" ${it.shape==='horizontal'?'selected':''}>กรอบแนวนอน</option><option value="vertical" ${it.shape==='vertical'?'selected':''}>กรอบแนวตั้ง</option><option value="diamond" ${it.shape==='diamond'?'selected':''}>ข้าวหลามตัด ◆</option><option value="hexagon" ${it.shape==='hexagon'?'selected':''}>หกเหลี่ยม ⬡</option><option value="chamfer" ${it.shape==='chamfer'?'selected':''}>ตัดมุม ⬟</option></select></div><div class="field"><label>ขนาดภาพภายในกรอบ <span id="ocropzval" class="small" style="float:right">${Math.round(it.cropZoom*100)}%</span></label><div class="font-size-control"><button class="btn font-size-btn" id="ocropzminus" type="button">−</button><input id="ocropz" type="range" min="0.5" max="3" step="0.05" value="${it.cropZoom}"><button class="btn font-size-btn" id="ocropzplus" type="button">＋</button></div></div><div class="field"><label>ตำแหน่งภาพแนวนอน <span id="ocropxval" class="small" style="float:right">${Math.round(it.cropX)}%</span></label><input id="ocropx" type="range" min="-100" max="100" step="1" value="${it.cropX}"></div><div class="field"><label>ตำแหน่งภาพแนวตั้ง <span id="ocropyval" class="small" style="float:right">${Math.round(it.cropY)}%</span></label><input id="ocropy" type="range" min="-100" max="100" step="1" value="${it.cropY}"></div><div class="field"><label>ความหนากรอบ <span id="obwval" class="small" style="float:right">${it.borderWidth}px</span></label><input id="obw" type="range" min="0" max="20" step="1" value="${it.borderWidth}"></div><div class="field"><label>สีกรอบ</label><div class="colorbox"><input id="obc" type="color" value="${it.borderColor}"><span id="obcval">${it.borderColor}</span></div></div><div class="field"><label>เปลี่ยนภาพ</label><button class="btn" id="replaceOverlay" type="button" style="width:100%">🖼️ เลือกภาพใหม่</button></div>`;}
  if(it.type==='gradient'){it.opacity=Number.isFinite(Number(it.opacity))?Number(it.opacity):0.85;it.heightRatio=Number.isFinite(Number(it.heightRatio))?Number(it.heightRatio):0.45;html+=`<div class="field"><label>ความเข้มของสีดำ <span id="gopval" class="small" style="float:right">${Math.round(it.opacity*100)}%</span></label><input id="gop" type="range" min="0" max="1" step="0.01" value="${it.opacity}"></div><div class="field"><label>ความสูงของไล่เฉด <span id="ghval" class="small" style="float:right">${Math.round(it.heightRatio*100)}%</span></label><input id="gh" type="range" min="0.15" max="1" step="0.01" value="${it.heightRatio}"></div><div class="small">ไล่เฉดจากโปร่งใสด้านบน → ดำด้านล่าง</div>`;}
  if(it.type==='text'||it.type==='bar'){
  html+=`<div class="field"><label>ข้อความ</label><textarea id="ptext" style="width:100%;min-height:70px;padding:8px;border:1px solid #d6dce4;border-radius:7px">${esc(it.text)}</textarea></div>
@@ -387,6 +420,7 @@ function renderProps(){
 <option value="manual" ${it.fit==='manual'?'selected':''}>กำหนดกว้าง/สูงเอง</option>
 </select></div><div class="field"><label>ระยะห่างบน–ล่างของข้อความ <span id="ppadval" class="small" style="float:right">${Number(it.pad)||0}px</span></label><input id="ppad" type="range" min="4" max="40" step="1" value="${Number(it.pad)||0}"></div>`;
  }
+ if(it.type==='logo'||it.type==='overlay') html+=`<div class="field"><label>หมุนภาพ <span id="protval" class="small" style="float:right">${Math.round(Number(it.rotation)||0)}°</span></label><input id="prot" type="range" min="-180" max="180" step="1" value="${Number(it.rotation)||0}"></div>`;
  html+=`<div class="row"><div class="field"><label>X</label><input id="px" type="number" value="${Math.round(it.x)}"></div><div class="field"><label>Y</label><input id="py" type="number" value="${Math.round(it.y)}"></div></div>
  <div class="row"><div class="field"><label>กว้าง</label><input id="pw" type="number" value="${Math.round(it.w)}"></div><div class="field"><label>สูง</label><input id="ph" type="number" value="${Math.round(it.h)}"></div></div>
  <div class="field"><label>จัดตำแหน่งข้อความกับภาพ</label><div class="row"><button class="btn" id="alignX" type="button">↔️ Center X</button><button class="btn" id="alignY" type="button">↕️ Center Y</button></div><button class="btn" id="alignBoth" type="button" style="width:100%;margin-top:7px">🎯 Center X + Y</button><div class="small" style="margin-top:6px">Center X จะย้ายเฉพาะซ้าย–ขวาไปกึ่งกลางภาพ โดยตำแหน่งบน–ล่างและมุมมอง Canvas ไม่เปลี่ยน</div></div>
@@ -398,6 +432,7 @@ function renderProps(){
    const el=elById(); if(!el)return;
    el.style.left=it.x+'px'; el.style.top=it.y+'px'; el.style.width=it.w+'px'; el.style.height=it.h+'px';
    if(it.type==='image'){const im=el.querySelector('img');if(im){it.zoom=Number(it.zoom)||1;im.style.transform=`scale(${it.zoom})`;im.style.objectFit='cover'}el.style.overflow='hidden'}
+   if(it.type==='overlay'){const im=el.querySelector('img');const shape=it.shape||'circle';it.cropZoom=Number.isFinite(Number(it.cropZoom))?Number(it.cropZoom):1;it.cropX=Number.isFinite(Number(it.cropX))?Number(it.cropX):0;it.cropY=Number.isFinite(Number(it.cropY))?Number(it.cropY):0;el.classList.remove('shape-circle','shape-rounded','shape-square','shape-ellipse');el.classList.add('shape-'+shape);el.style.border=(Number(it.borderWidth)||0)+'px solid '+(it.borderColor||'#ffffff');el.style.borderRadius=shape==='circle'||shape==='ellipse'?'50%':shape==='rounded'?'18%':'0';el.style.overflow='hidden';if(im){im.style.objectFit='cover';im.style.width='100%';im.style.height='100%';im.style.transform=`translate(${it.cropX}%,${it.cropY}%) scale(${it.cropZoom})`}}
    if(it.type==='text'){el.textContent=it.text;el.style.fontSize=it.fontSize+'px';el.style.color=it.color;el.style.fontFamily=it.font||'Kanit';el.style.textAlign=it.textAlign||'left'}
    if(it.type==='bar'){el.textContent=it.text;el.style.fontSize=it.fontSize+'px';el.style.color=it.color;el.style.fontFamily=it.font||'Kanit';el.style.textAlign=it.textAlign||'left';el.style.background=it.bg;fitBar(it,el)}
    if(it.type==='gradient'){el.style.background=`linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,${it.opacity}) 100%)`;el.style.top=it.y+'px';el.style.height=it.h+'px';}
@@ -413,6 +448,13 @@ function renderProps(){
  if(document.getElementById('ppad')){const pq=document.getElementById('ppad'), pv=document.getElementById('ppadval'); const setPad=v=>{it.pad=Math.max(4,Math.min(40,Math.round(+v||4))); pq.value=it.pad; if(pv)pv.textContent=it.pad+'px'; sync();}; pq.oninput=()=>setPad(pq.value);}
  if(document.getElementById('gop')){const oq=document.getElementById('gop'), ov=document.getElementById('gopval'); oq.oninput=()=>{it.opacity=Math.max(0,Math.min(1,+oq.value||0));ov.textContent=Math.round(it.opacity*100)+'%';const el=elById();if(el)el.style.background=`linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,${it.opacity}) 100%)`;};}
  if(document.getElementById('gh')){const hq=document.getElementById('gh'), hv=document.getElementById('ghval'); hq.oninput=()=>{it.heightRatio=Math.max(.15,Math.min(1,+hq.value||.45));it.h=Math.round(state.h*it.heightRatio);it.y=state.h-it.h;hq.value=it.heightRatio;hv.textContent=Math.round(it.heightRatio*100)+'%';sync();};}
+ if(document.getElementById('oshape')){document.getElementById('oshape').onchange=()=>{it.shape=document.getElementById('oshape').value;if(it.shape==='circle'||it.shape==='square'){const s=Math.max(40,Math.min(it.w,it.h));it.w=s;it.h=s;}else if(it.shape==='horizontal'){const cy=it.y+it.h/2;it.w=Math.max(160,it.w);it.h=Math.max(40,Math.round(it.w/1.6));it.y=Math.max(0,Math.min(state.h-it.h,cy-it.h/2));}else if(it.shape==='vertical'){const cx=it.x+it.w/2;it.h=Math.max(160,it.h);it.w=Math.max(40,Math.round(it.h/1.6));it.x=Math.max(0,Math.min(state.w-it.w,cx-it.w/2));}sync();renderProps();}}
+ if(document.getElementById('obw')){const q=document.getElementById('obw'),v=document.getElementById('obwval');q.oninput=()=>{it.borderWidth=Math.max(0,Math.min(20,+q.value||0));if(v)v.textContent=it.borderWidth+'px';sync();}}
+ if(document.getElementById('obc')){const q=document.getElementById('obc'),v=document.getElementById('obcval');q.oninput=()=>{it.borderColor=q.value;if(v)v.textContent=q.value;sync();}}
+ if(document.getElementById('ocropz')){const q=document.getElementById('ocropz'),v=document.getElementById('ocropzval');const set=vx=>{it.cropZoom=Math.max(.5,Math.min(3,+vx||1));q.value=it.cropZoom;if(v)v.textContent=Math.round(it.cropZoom*100)+'%';sync()};q.oninput=()=>set(q.value);document.getElementById('ocropzminus').onclick=()=>set(it.cropZoom-.05);document.getElementById('ocropzplus').onclick=()=>set(it.cropZoom+.05);}
+ if(document.getElementById('ocropx')){const q=document.getElementById('ocropx'),v=document.getElementById('ocropxval');q.oninput=()=>{it.cropX=Math.max(-100,Math.min(100,+q.value||0));v.textContent=Math.round(it.cropX)+'%';sync()};}
+ if(document.getElementById('ocropy')){const q=document.getElementById('ocropy'),v=document.getElementById('ocropyval');q.oninput=()=>{it.cropY=Math.max(-100,Math.min(100,+q.value||0));v.textContent=Math.round(it.cropY)+'%';sync()};}
+ if(document.getElementById('replaceOverlay'))document.getElementById('replaceOverlay').onclick=()=>{pending='replaceOverlay';document.getElementById('overlayFile').click();};
  if(document.getElementById('pzoom')){const zq=document.getElementById('pzoom'), zv=document.getElementById('pzoomval'); const setZoom=v=>{it.zoom=Math.max(1,Math.min(3,+v||1));zq.value=it.zoom;zv.textContent=Math.round(it.zoom*100)+'%';sync()}; zq.oninput=()=>setZoom(zq.value); document.getElementById('zoomout').onclick=()=>setZoom(it.zoom-0.1); document.getElementById('zoomin').onclick=()=>setZoom(it.zoom+0.1);}
  ['px','py'].forEach(k=>bindv(k,v=>{
    const n=Math.max(0,+v||0);
@@ -422,7 +464,7 @@ function renderProps(){
  const pw=document.getElementById('pw'), ph=document.getElementById('ph');
  if(pw) pw.oninput=()=>{
    const n=Math.max(20,+pw.value||20);
-   if(it.type==='logo'){
+   if(it.type==='logo'||it.type==='overlay'){
      const ratio=Number(it.aspectRatio)||(it.w/Math.max(1,it.h));
      it.w=n; it.h=Math.max(20,n/ratio);
      if(ph) ph.value=Math.round(it.h);
@@ -431,13 +473,15 @@ function renderProps(){
  };
  if(ph) ph.oninput=()=>{
    const n=Math.max(20,+ph.value||20);
-   if(it.type==='logo'){
+   if(it.type==='logo'||it.type==='overlay'){
      const ratio=Number(it.aspectRatio)||(it.w/Math.max(1,it.h));
      it.h=n; it.w=Math.max(20,n*ratio);
      if(pw) pw.value=Math.round(it.w);
    }else it.h=n;
    sync();
  };
+ const prot=document.getElementById('prot');
+ if(prot){ prot.oninput=()=>{ it.rotation=Number(prot.value)||0; const rv=document.getElementById('protval'); if(rv)rv.textContent=Math.round(it.rotation)+'°'; const el=elById(); if(el)el.style.transform=`rotate(${it.rotation}deg)`; saveDraft(); }; prot.onchange=()=>{snap();render();}; }
  const updateAlignedElement=()=>{
    const el=elById();
    if(!el)return;
@@ -501,7 +545,7 @@ function add(type,src=''){
  state.items.push(it);state.selected=it.id;render()
 }
 function choose(type){pending=type;document.getElementById('file').click()}
-document.getElementById('addText').onclick=()=>add('text');document.getElementById('addBar').onclick=()=>add('bar');document.getElementById('addGradient').onclick=()=>add('gradient');document.getElementById('addImage').onclick=()=>choose('image');document.getElementById('addLogo').onclick=()=>choose('logo');
+document.getElementById('addText').onclick=()=>add('text');document.getElementById('addBar').onclick=()=>add('bar');document.getElementById('addGradient').onclick=()=>add('gradient');document.getElementById('addImage').onclick=()=>choose('image');document.getElementById('addOverlay').onclick=()=>choose('overlay');document.getElementById('addLogo').onclick=()=>choose('logo');
 function handleImageFile(f,type){
   if(!f) return;
   const kind=type||pending||'image';
@@ -513,6 +557,7 @@ function handleImageFile(f,type){
     const img=new Image();
     img.onload=()=>{
       let w=img.naturalWidth||1080,h=img.naturalHeight||1350;
+      if(kind==='replaceOverlay'){const target=state.items.find(x=>x.id===state.selected && x.type==='overlay');if(target){snap();target.src=src;target.aspectRatio=w/h;target.cropZoom=1;target.cropX=0;target.cropY=0;state.selected=target.id;render();pending=null;return;}return;}
       if(kind==='image'){
         // There is one background/design image. Choosing another image replaces it
         // instead of adding a small second image above the design.
@@ -544,15 +589,24 @@ function handleImageFile(f,type){
 document.getElementById('file').onchange=e=>{handleImageFile(e.target.files[0],pending);e.target.value=''};
 document.getElementById('mobileImageFile').onchange=e=>{handleImageFile(e.target.files[0],'image');e.target.value=''};
 document.getElementById('mobileLogoFile').onchange=e=>{handleImageFile(e.target.files[0],'logo');e.target.value=''}
+document.getElementById('mobileOverlayFile').onchange=e=>{handleImageFile(e.target.files[0],'overlay');e.target.value=''}
+document.getElementById('overlayFile').onchange=e=>{handleImageFile(e.target.files[0],'overlay');e.target.value=''}
 function addFrom(type,src,nw,nh){
   // nw/nh are the image's natural dimensions. Scale exactly once.
   let iw=Number(nw)||1080, ih=Number(nh)||1350;
-  const it={id:newId(),type,x:40,y:40,w:360,h:240,src,locked:false}; if(type==='image') it.zoom=1; if(type==='logo') it.aspectRatio=iw/ih;
+  const it={id:newId(),type,x:40,y:40,w:360,h:240,src,locked:false,rotation:0}; if(type==='image') it.zoom=1; if(type==='logo') it.aspectRatio=iw/ih;
   if(type==='logo'){
     const maxW=Math.min(300,state.w*0.35), maxH=Math.min(220,state.h*0.25);
     const s=Math.min(maxW/iw,maxH/ih,1);
     it.w=Math.max(40,Math.round(iw*s)); it.h=Math.max(40,Math.round(ih*s));
     it.x=Math.max(0,state.w-it.w-40); it.y=40;
+  }else if(type==='overlay'){
+    const maxW=Math.min(360,state.w*0.34), maxH=Math.min(360,state.h*0.28);
+    const s=Math.min(maxW/iw,maxH/ih,1);
+    it.w=Math.max(120,Math.round(iw*s)); it.h=Math.max(120,Math.round(ih*s));
+    const side=Math.max(120,Math.min(it.w,it.h)); it.w=side; it.h=side;
+    it.x=Math.max(20,state.w-it.w-40); it.y=120;
+    it.aspectRatio=1; it.shape='circle'; it.borderWidth=6; it.borderColor='#ffffff'; it.cropZoom=1; it.cropX=0; it.cropY=0;
   }else{
     // First image is treated as a canvas-cover image. Additional images are
     // smaller overlays so they never hide existing text/logo layers.
@@ -592,7 +646,7 @@ async function exportCanvas(format='png'){
   const x=c.getContext('2d');
   x.fillStyle='#fff';x.fillRect(0,0,c.width,c.height);
   for(const it of state.items){
-    if(it.type==='image'||it.type==='logo'){
+    if(it.type==='image'||it.type==='logo'||it.type==='overlay'){
       await drawImage(x,it);
       continue;
     }
@@ -650,7 +704,9 @@ async function exportCanvas(format='png'){
   a.href=c.toDataURL(isJpg?'image/jpeg':'image/png',isJpg?0.92:1);
   a.click();
 }
-function drawImage(ctx,it){return new Promise(res=>{const im=new Image();im.onload=()=>{if(it.type==='image' && Number(it.zoom)>1){const z=Number(it.zoom)||1;const s=Math.max(it.w/im.naturalWidth,it.h/im.naturalHeight)*z;const dw=im.naturalWidth*s,dh=im.naturalHeight*s;const dx=it.x+(it.w-dw)/2,dy=it.y+(it.h-dh)/2;ctx.save();ctx.beginPath();ctx.rect(it.x,it.y,it.w,it.h);ctx.clip();ctx.drawImage(im,dx,dy,dw,dh);ctx.restore();}else{ctx.drawImage(im,it.x,it.y,it.w,it.h)}res()};im.src=it.src})}
+function overlayShapePath(ctx,it,inset=0){const x=it.x+inset,y=it.y+inset,w=Math.max(0,it.w-inset*2),h=Math.max(0,it.h-inset*2),cx=x+w/2,cy=y+h/2;const shape=it.shape||'circle';ctx.beginPath();if(shape==='circle'){ctx.ellipse(cx,cy,Math.min(w,h)/2,Math.min(w,h)/2,0,0,Math.PI*2);}else if(shape==='ellipse'){ctx.ellipse(cx,cy,w/2,h/2,0,0,Math.PI*2);}else if(shape==='rounded'){const r=Math.min(w,h)*.18;roundRectPath(ctx,x,y,w,h,r);}else if(shape==='diamond'){ctx.moveTo(cx,y);ctx.lineTo(x+w,cy);ctx.lineTo(cx,y+h);ctx.lineTo(x,cy);ctx.closePath();}else if(shape==='hexagon'){ctx.moveTo(x+w*.25,y);ctx.lineTo(x+w*.75,y);ctx.lineTo(x+w,cy);ctx.lineTo(x+w*.75,y+h);ctx.lineTo(x+w*.25,y+h);ctx.lineTo(x,cy);ctx.closePath();}else if(shape==='chamfer'){const c=Math.min(w,h)*.14;ctx.moveTo(x+c,y);ctx.lineTo(x+w-c,y);ctx.lineTo(x+w,y+c);ctx.lineTo(x+w,y+h-c);ctx.lineTo(x+w-c,y+h);ctx.lineTo(x+c,y+h);ctx.lineTo(x,y+h-c);ctx.lineTo(x,y+c);ctx.closePath();}else{ctx.rect(x,y,w,h);}return ctx;}
+function drawImage(ctx,it){return new Promise(res=>{const im=new Image();im.onload=()=>{const rot=(Number(it.rotation)||0)*Math.PI/180;const cx=it.x+it.w/2,cy=it.y+it.h/2;ctx.save();ctx.translate(cx,cy);ctx.rotate(rot);ctx.translate(-cx,-cy);if(it.type==='image' && Number(it.zoom)>1){const z=Number(it.zoom)||1;const s=Math.max(it.w/im.naturalWidth,it.h/im.naturalHeight)*z;const dw=im.naturalWidth*s,dh=im.naturalHeight*s;const dx=it.x+(it.w-dw)/2,dy=it.y+(it.h-dh)/2;ctx.save();ctx.beginPath();ctx.rect(it.x,it.y,it.w,it.h);ctx.clip();ctx.drawImage(im,dx,dy,dw,dh);ctx.restore();}else if(it.type==='overlay'){const shape=it.shape||'circle';ctx.save();ctx.beginPath();overlayShapePath(ctx,it);ctx.clip();const base=Math.max(it.w/im.naturalWidth,it.h/im.naturalHeight);const s=base*(Number(it.cropZoom)||1);const dw=im.naturalWidth*s,dh=im.naturalHeight*s;const dx=it.x+(it.w-dw)/2+(Number(it.cropX)||0)*it.w/100,dy=it.y+(it.h-dh)/2+(Number(it.cropY)||0)*it.h/100;ctx.drawImage(im,dx,dy,dw,dh);ctx.restore();const bw=Number(it.borderWidth)||0;if(bw>0){ctx.save();ctx.beginPath();overlayShapePath(ctx,it,bw/2);ctx.strokeStyle=it.borderColor||'#fff';ctx.lineWidth=bw;ctx.stroke();ctx.restore();}}else{ctx.drawImage(im,it.x,it.y,it.w,it.h)}ctx.restore();res()};im.src=it.src})}
+function roundRectPath(ctx,x,y,w,h,r){const rr=Math.min(r,w/2,h/2);ctx.moveTo(x+rr,y);ctx.arcTo(x+w,y,x+w,y+h,rr);ctx.arcTo(x+w,y+h,x,y+h,rr);ctx.arcTo(x,y+h,x,y,rr);ctx.arcTo(x,y,x+w,y,rr);ctx.closePath();}
 function wrapLines(ctx,t,max){const out=[];for(const para of t.split('\\n')){let line='';for(const ch of para){const test=line+ch;if(ctx.measureText(test).width>max&&line){out.push(line);line=ch}else line=test}out.push(line)}return out}
 function drawLines(ctx,lines,x,y,fs){lines.forEach((l,i)=>ctx.fillText(l,x,y+fs*(i+0.9)))}
 function drawWrap(ctx,t,x,y,w,fs){drawLines(ctx,wrapLines(ctx,t,w),x,y,fs)}
