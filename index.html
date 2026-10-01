@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Template Studio Online V65</title>
+<title>Template Studio Online V66</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;600;700;800&family=Noto+Sans+Thai:wght@400;500;600;700;800&family=Prompt:wght@400;500;600;700;800&family=Sarabun:wght@400;500;600;700&display=swap');
 *{box-sizing:border-box}body{margin:0;font-family:Arial,"Noto Sans Thai",sans-serif;background:#eef1f5;color:#18202a}
@@ -26,7 +26,7 @@ input[type=color]{width:100%;height:36px;border:0;background:none;padding:0}
   .top .btn{padding:5px 4px;min-height:40px;font-size:15px;width:100%;min-width:0;white-space:nowrap}
   .top .primary{font-size:15px;min-width:0}
   .left{display:none}
-  .right{display:none;position:fixed;left:0;right:0;bottom:68px;width:100%;max-height:34dvh;background:#fff;border-left:0;border-top:1px solid #d9dee5;padding:10px 12px;overflow:auto;z-index:90;box-shadow:0 -6px 20px #0001}
+  .right{display:none;position:fixed;left:0;right:0;bottom:68px;width:100%;max-height:58dvh;background:#fff;border-left:0;border-top:1px solid #d9dee5;padding:10px 12px;overflow:auto;z-index:90;box-shadow:0 -6px 20px #0001}
   .right.props-open{display:block}
   .right .panel-title{font-size:15px;margin:2px 0 8px}
   .props-head{display:flex;align-items:center;justify-content:space-between;gap:8px;position:sticky;top:-10px;background:#fff;z-index:2;padding:2px 0 8px}
@@ -34,7 +34,8 @@ input[type=color]{width:100%;height:36px;border:0;background:none;padding:0}
   .right .field{margin:7px 0}
   .right .field label{font-size:11px}
   .right .btn{min-height:38px}
-  .right .layers{display:none}
+  .right .layers{display:flex;flex-direction:column;gap:6px;margin-top:8px;padding-bottom:8px}
+  .right .layer{min-height:46px}
   .right hr{display:none}
   .right:not(.props-open){display:none}
   .right.props-open{overflow:auto}
@@ -52,7 +53,7 @@ input[type=color]{width:100%;height:36px;border:0;background:none;padding:0}
 <body>
 <div class="app">
 <header class="top">
-<div class="brand">Template Studio Online V65</div>
+<div class="brand">Template Studio Online V66</div>
 <button class="btn" id="undo">↶ Undo</button><button class="btn" id="redo">↷ Redo</button>
 <button class="btn" id="clear">ล้าง</button><button class="btn" id="loadLatest" title="โหลดงานล่าสุด">↻ ล่าสุด</button><select class="btn" id="exportFormat" aria-label="รูปแบบไฟล์"><option value="png">PNG</option><option value="jpeg">JPG</option></select><button class="btn primary" id="export">Export</button>
 </header>
