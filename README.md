@@ -1,3 +1,4 @@
-# Template Studio Online V91
-
-V91: removed the horizontal center guide and Y/top-bottom center snap. The vertical center guide and left-right center snap remain. Other editor features are preserved from V90.
+Template Studio Online V96
+- Based on V95
+- Font size range increased from 12–180px to 12–500px.
+- DB Helvethaica X remains the default font.

@@ -3,9 +3,51 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Template Studio Online V91</title>
+<title>Template Studio Online V95</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;600;700;800&family=Noto+Sans+Thai:wght@400;500;600;700;800&family=Prompt:wght@400;500;600;700;800&family=Sarabun:wght@400;500;600;700&display=swap');
+@font-face{font-family:'DB Helvethaica X Cond';src:url('fonts/DB_Helvethaica_X_Bd_Cond_It_v3_2_ttf.ttf') format('truetype');font-weight:700;font-style:italic;font-display:swap;}
+@font-face{font-family:'DB Helvethaica X Cond';src:url('fonts/DB_Helvethaica_X_Bd_Cond_v3_2_ttf.ttf') format('truetype');font-weight:700;font-style:normal;font-display:swap;}
+@font-face{font-family:'DB Helvethaica X Ext';src:url('fonts/DB_Helvethaica_X_Bd_Ext_It_v3_2_ttf.ttf') format('truetype');font-weight:700;font-style:italic;font-display:swap;}
+@font-face{font-family:'DB Helvethaica X Ext';src:url('fonts/DB_Helvethaica_X_Bd_Ext_v3_2_ttf.ttf') format('truetype');font-weight:700;font-style:normal;font-display:swap;}
+@font-face{font-family:'DB Helvethaica X';src:url('fonts/DB_Helvethaica_X_Bd_It_v3_2_ttf.ttf') format('truetype');font-weight:700;font-style:italic;font-display:swap;}
+@font-face{font-family:'DB Helvethaica X';src:url('fonts/DB_Helvethaica_X_Bd_v3_2_ttf.ttf') format('truetype');font-weight:700;font-style:normal;font-display:swap;}
+@font-face{font-family:'DB Helvethaica X Cond';src:url('fonts/DB_Helvethaica_X_Blk_Cond_It_v3_2_ttf.ttf') format('truetype');font-weight:900;font-style:italic;font-display:swap;}
+@font-face{font-family:'DB Helvethaica X Cond';src:url('fonts/DB_Helvethaica_X_Blk_Cond_v3_2_ttf.ttf') format('truetype');font-weight:900;font-style:normal;font-display:swap;}
+@font-face{font-family:'DB Helvethaica X Ext';src:url('fonts/DB_Helvethaica_X_Blk_Ext_It_v3_2_ttf.ttf') format('truetype');font-weight:900;font-style:italic;font-display:swap;}
+@font-face{font-family:'DB Helvethaica X Ext';src:url('fonts/DB_Helvethaica_X_Blk_Ext_v3_2_ttf.ttf') format('truetype');font-weight:900;font-style:normal;font-display:swap;}
+@font-face{font-family:'DB Helvethaica X';src:url('fonts/DB_Helvethaica_X_Blk_It_v3_2_ttf.ttf') format('truetype');font-weight:900;font-style:italic;font-display:swap;}
+@font-face{font-family:'DB Helvethaica X';src:url('fonts/DB_Helvethaica_X_Blk_v3_2_ttf.ttf') format('truetype');font-weight:900;font-style:normal;font-display:swap;}
+@font-face{font-family:'DB Helvethaica X Cond';src:url('fonts/DB_Helvethaica_X_Cond_It_v3_2_ttf.ttf') format('truetype');font-weight:400;font-style:italic;font-display:swap;}
+@font-face{font-family:'DB Helvethaica X Cond';src:url('fonts/DB_Helvethaica_X_Cond_v3_2_ttf.ttf') format('truetype');font-weight:400;font-style:normal;font-display:swap;}
+@font-face{font-family:'DB Helvethaica X Ext';src:url('fonts/DB_Helvethaica_X_Ext_It_v3_2_ttf.ttf') format('truetype');font-weight:400;font-style:italic;font-display:swap;}
+@font-face{font-family:'DB Helvethaica X Ext';src:url('fonts/DB_Helvethaica_X_Ext_v3_2_ttf.ttf') format('truetype');font-weight:400;font-style:normal;font-display:swap;}
+@font-face{font-family:'DB Helvethaica X';src:url('fonts/DB_Helvethaica_X_It_v3_2_ttf.ttf') format('truetype');font-weight:400;font-style:italic;font-display:swap;}
+@font-face{font-family:'DB Helvethaica X Cond';src:url('fonts/DB_Helvethaica_X_Li_Cond_It_v3_2_ttf.ttf') format('truetype');font-weight:300;font-style:italic;font-display:swap;}
+@font-face{font-family:'DB Helvethaica X Cond';src:url('fonts/DB_Helvethaica_X_Li_Cond_v3_2_ttf.ttf') format('truetype');font-weight:300;font-style:normal;font-display:swap;}
+@font-face{font-family:'DB Helvethaica X Ext';src:url('fonts/DB_Helvethaica_X_Li_Ext_It_v3_2_ttf.ttf') format('truetype');font-weight:300;font-style:italic;font-display:swap;}
+@font-face{font-family:'DB Helvethaica X Ext';src:url('fonts/DB_Helvethaica_X_Li_Ext_v3_2_ttf.ttf') format('truetype');font-weight:300;font-style:normal;font-display:swap;}
+@font-face{font-family:'DB Helvethaica X';src:url('fonts/DB_Helvethaica_X_Li_It_v3_2_ttf.ttf') format('truetype');font-weight:300;font-style:italic;font-display:swap;}
+@font-face{font-family:'DB Helvethaica X';src:url('fonts/DB_Helvethaica_X_Li_v3_2_ttf.ttf') format('truetype');font-weight:300;font-style:normal;font-display:swap;}
+@font-face{font-family:'DB Helvethaica X Cond';src:url('fonts/DB_Helvethaica_X_Med_Cond_It_v3_2_ttf.ttf') format('truetype');font-weight:500;font-style:italic;font-display:swap;}
+@font-face{font-family:'DB Helvethaica X Cond';src:url('fonts/DB_Helvethaica_X_Med_Cond_v3_2_ttf.ttf') format('truetype');font-weight:500;font-style:normal;font-display:swap;}
+@font-face{font-family:'DB Helvethaica X Ext';src:url('fonts/DB_Helvethaica_X_Med_Ext_It_v3_2_ttf.ttf') format('truetype');font-weight:500;font-style:italic;font-display:swap;}
+@font-face{font-family:'DB Helvethaica X Ext';src:url('fonts/DB_Helvethaica_X_Med_Ext_v3_2_ttf.ttf') format('truetype');font-weight:500;font-style:normal;font-display:swap;}
+@font-face{font-family:'DB Helvethaica X';src:url('fonts/DB_Helvethaica_X_Med_It_v3_2_ttf.ttf') format('truetype');font-weight:500;font-style:italic;font-display:swap;}
+@font-face{font-family:'DB Helvethaica X';src:url('fonts/DB_Helvethaica_X_Med_v3_2_ttf.ttf') format('truetype');font-weight:500;font-style:normal;font-display:swap;}
+@font-face{font-family:'DB Helvethaica X Cond';src:url('fonts/DB_Helvethaica_X_Thin_Cond_It_v3_2_ttf.ttf') format('truetype');font-weight:100;font-style:italic;font-display:swap;}
+@font-face{font-family:'DB Helvethaica X Cond';src:url('fonts/DB_Helvethaica_X_Thin_Cond_v3_2_ttf.ttf') format('truetype');font-weight:100;font-style:normal;font-display:swap;}
+@font-face{font-family:'DB Helvethaica X Ext';src:url('fonts/DB_Helvethaica_X_Thin_Ext_It_v3_2_ttf.ttf') format('truetype');font-weight:100;font-style:italic;font-display:swap;}
+@font-face{font-family:'DB Helvethaica X Ext';src:url('fonts/DB_Helvethaica_X_Thin_Ext_v3_2_ttf.ttf') format('truetype');font-weight:100;font-style:normal;font-display:swap;}
+@font-face{font-family:'DB Helvethaica X';src:url('fonts/DB_Helvethaica_X_Thin_It_v3_2_ttf.ttf') format('truetype');font-weight:100;font-style:italic;font-display:swap;}
+@font-face{font-family:'DB Helvethaica X';src:url('fonts/DB_Helvethaica_X_Thin_v3_2_ttf.ttf') format('truetype');font-weight:100;font-style:normal;font-display:swap;}
+@font-face{font-family:'DB Helvethaica X Cond';src:url('fonts/DB_Helvethaica_X_UlLi_Cond_It_v3_2_ttf.ttf') format('truetype');font-weight:200;font-style:italic;font-display:swap;}
+@font-face{font-family:'DB Helvethaica X Cond';src:url('fonts/DB_Helvethaica_X_UlLi_Cond_v3_2_ttf.ttf') format('truetype');font-weight:200;font-style:normal;font-display:swap;}
+@font-face{font-family:'DB Helvethaica X Ext';src:url('fonts/DB_Helvethaica_X_UlLi_Ext_It_v3_2_ttf.ttf') format('truetype');font-weight:200;font-style:italic;font-display:swap;}
+@font-face{font-family:'DB Helvethaica X Ext';src:url('fonts/DB_Helvethaica_X_UlLi_Ext_v3_2_ttf.ttf') format('truetype');font-weight:200;font-style:normal;font-display:swap;}
+@font-face{font-family:'DB Helvethaica X';src:url('fonts/DB_Helvethaica_X_UlLi_It_v3_2_ttf.ttf') format('truetype');font-weight:200;font-style:italic;font-display:swap;}
+@font-face{font-family:'DB Helvethaica X';src:url('fonts/DB_Helvethaica_X_UlLi_v3_2_ttf.ttf') format('truetype');font-weight:200;font-style:normal;font-display:swap;}
+@font-face{font-family:'DB Helvethaica X';src:url('fonts/DB_Helvethaica_X_v3_2_ttf.ttf') format('truetype');font-weight:400;font-style:normal;font-display:swap;}
 *{box-sizing:border-box}body{margin:0;font-family:Arial,"Noto Sans Thai",sans-serif;background:#eef1f5;color:#18202a}
 .app{height:100dvh;min-height:100vh;display:flex;flex-direction:column;overflow:hidden}.top{height:58px;background:#fff;border-bottom:1px solid #d9dee5;display:flex;align-items:center;padding:0 16px;gap:12px}.brand{font-weight:800;font-size:18px;margin-right:auto}
 button,select,input{font:inherit}.btn{border:1px solid #d3d9e1;background:#fff;border-radius:8px;padding:8px 12px;cursor:pointer}.btn:hover{background:#f3f5f8}.primary{background:#1769e0;color:white;border-color:#1769e0}
@@ -53,7 +95,7 @@ input[type=color]{width:100%;height:36px;border:0;background:none;padding:0}
 <body>
 <div class="app">
 <header class="top">
-<div class="brand">Template Studio Online V91</div>
+<div class="brand">Template Studio Online V95</div>
 <button class="btn" id="undo">↶ Undo</button><button class="btn" id="redo">↷ Redo</button>
 <button class="btn" id="clear">ล้าง</button><button class="btn" id="loadLatest" title="โหลดงานล่าสุด">↻ ล่าสุด</button><select class="btn" id="exportFormat" aria-label="รูปแบบไฟล์"><option value="png">PNG</option><option value="jpeg">JPG</option></select><button class="btn primary" id="export">Export</button>
 </header>
@@ -141,7 +183,7 @@ function loadFonts(){
   customFonts.forEach(f=>registerFont(f.name,f.data));
 }
 function fontOptions(selected){
-  const built=['Kanit','Prompt','Noto Sans Thai','Sarabun','Arial'];
+  const built=['Kanit','Prompt','Noto Sans Thai','Sarabun','Arial','DB Helvethaica X','DB Helvethaica X Cond','DB Helvethaica X Ext'];
   return [...built,...customFonts.map(f=>f.name)].map(f=>`<option ${selected===f?'selected':''}>${f}</option>`).join('');
 }
 loadFonts();
@@ -160,7 +202,7 @@ updateViewportHeight();
 function measureTextMetrics(it){
   const fs=Number(it.fontSize)||64;
   const weight=it.type==='bar'?800:700;
-  const fontName=(it.font||'Kanit').replace(/[\'\\]/g,'');
+  const fontName=(it.font||'DB Helvethaica X').replace(/[\'\\]/g,'');
   const ctx=document.createElement('canvas').getContext('2d');
   ctx.font=`${weight} ${fs}px '${fontName}'`;
   const lines=String(it.text||'').split('\n');
@@ -222,7 +264,7 @@ function render(){
     const el=document.createElement('div'); el.className='item '+it.type+'-item'+(state.selected===it.id?' selected':'')+(it.locked?' locked':'');
     el.dataset.id=it.id; el.style.left=it.x+'px';el.style.top=it.y+'px';el.style.width=it.w+'px';el.style.height=it.h+'px';el.style.zIndex=i;
     if(it.type==='text'){
-      el.textContent=it.text;el.style.fontSize=it.fontSize+'px';el.style.color=it.color;el.style.fontFamily=it.font||'Kanit';
+      el.textContent=it.text;el.style.fontSize=it.fontSize+'px';el.style.color=it.color;el.style.fontFamily=it.font||'DB Helvethaica X';
       // Plain text is content-sized: its drag target follows the actual text,
       // so users don't have to grab a tiny corner of a fixed-width box.
       el.style.width='max-content'; el.style.height='auto'; el.style.textAlign=it.textAlign||'left';
@@ -230,7 +272,7 @@ function render(){
       it.w=measured.w; it.h=measured.h;
       el.style.width=measured.w+'px'; el.style.height=measured.h+'px';
     }
-    if(it.type==='bar'){el.innerHTML='';el.style.fontSize=it.fontSize+'px';el.style.color=it.color;el.style.fontFamily=it.font||'Kanit';el.style.textAlign=it.textAlign||'left';const bg=document.createElement('div');bg.className='bar-bg';bg.style.background=it.bg||'#ffe500';const bc=document.createElement('div');bc.className='bar-content';bc.textContent=it.text;el.appendChild(bg);el.appendChild(bc);fitBar(it,el)}
+    if(it.type==='bar'){el.innerHTML='';el.style.fontSize=it.fontSize+'px';el.style.color=it.color;el.style.fontFamily=it.font||'DB Helvethaica X';el.style.textAlign=it.textAlign||'left';const bg=document.createElement('div');bg.className='bar-bg';bg.style.background=it.bg||'#ffe500';const bc=document.createElement('div');bc.className='bar-content';bc.textContent=it.text;el.appendChild(bg);el.appendChild(bc);fitBar(it,el)}
     if(it.type==='gradient'){el.style.background=`linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,${Math.max(0,Math.min(1,Number(it.opacity)||0.85))}) 100%)`;el.style.pointerEvents='none';}
     if(it.type==='image'||it.type==='logo'||it.type==='overlay'){const im=document.createElement('img');im.src=it.src;im.draggable=false;el.appendChild(im);el.style.objectFit='contain';if(it.type==='image'){it.zoom=Number(it.zoom)||1;im.style.transform=`scale(${it.zoom})`;im.style.transformOrigin='center center';im.style.objectFit='cover'} if(it.type==='overlay'){it.cropZoom=Number.isFinite(Number(it.cropZoom))?Number(it.cropZoom):1;it.cropX=Number.isFinite(Number(it.cropX))?Number(it.cropX):0;it.cropY=Number.isFinite(Number(it.cropY))?Number(it.cropY):0;applyOverlayShape(el,it);im.style.objectFit='cover';im.style.width='100%';im.style.height='100%';im.style.transform=`translate(${it.cropX}%,${it.cropY}%) scale(${it.cropZoom})`}}
     const h=document.createElement('div');h.className='resize';
@@ -266,7 +308,7 @@ function getBarFontMetrics(ctx, fs, text){
 }
 function measureBarLayout(it, el=null){
   const fs=Math.max(12,Number(it.fontSize)||64);
-  const fontName=(it.font||'Kanit').replace(/[']/g,'');
+  const fontName=(it.font||'DB Helvethaica X').replace(/[']/g,'');
   const padX=Math.max(0,Number(it.padX)||0);
   const ctx=document.createElement('canvas').getContext('2d');
   ctx.font=`800 ${fs}px '${fontName}'`;
@@ -321,31 +363,37 @@ function getManualBarTextBox(it){
   const lines=text.split('\n');
   const blockH=Math.max(lh,lines.length*lh);
   const ctx=document.createElement('canvas').getContext('2d');
-  ctx.font=`800 ${fs}px '${(it.font||'Kanit').replace(/[']/g,'')}'`;
+  ctx.font=`800 ${fs}px '${(it.font||'DB Helvethaica X').replace(/[']/g,'')}'`;
   const widths=lines.map(line=>ctx.measureText(line||' ').width);
   return {fs,lh,blockH,width:Math.max(20,...widths)};
 }
 function enterManualBar(it){
   if(it.type!=='bar')return;
-  const y=Number(it.y)||0, x=Number(it.x)||0;
+  const x=Number(it.x)||0, y=Number(it.y)||0;
   const w=Math.max(20,Number(it.w)||100), h=Math.max(20,Number(it.h)||100);
   const box=getManualBarTextBox(it);
-  if(!Number.isFinite(Number(it.textX))){
-    const padX=Number(it.padX)||0;
-    if(it.textAlign==='center') it.textX=x+(w-box.width)/2;
-    else if(it.textAlign==='right') it.textX=x+w-padX-box.width;
-    else it.textX=x+padX;
+  const padX=Number(it.padX)||0;
+  // Manual mode stores text position as an OFFSET inside the Bar group.
+  // The offset stays fixed when the Bar is moved or resized.
+  if(!Number.isFinite(Number(it.textOffsetX))){
+    const absX=Number.isFinite(Number(it.textX))?Number(it.textX):
+      (it.textAlign==='center'?x+(w-box.width)/2:
+       it.textAlign==='right'?x+w-padX-box.width:x+padX);
+    it.textOffsetX=absX-x;
   }
-  if(!Number.isFinite(Number(it.textY))){
-    it.textY=y+Math.max(0,(h-box.blockH)/2);
+  if(!Number.isFinite(Number(it.textOffsetY))){
+    const absY=Number.isFinite(Number(it.textY))?Number(it.textY):y+Math.max(0,(h-box.blockH)/2);
+    it.textOffsetY=absY-y;
   }
   it.fit='manual';
+  it.textX=x+Number(it.textOffsetX||0);
+  it.textY=y+Number(it.textOffsetY||0);
 }
 function positionManualBarText(it,content){
   if(!content)return;
   const box=getManualBarTextBox(it);
-  const relX=(Number(it.textX)||Number(it.x)||0)-Number(it.x||0);
-  const relY=(Number(it.textY)||Number(it.y)||0)-Number(it.y||0);
+  const relX=Number(it.textOffsetX)||0;
+  const relY=Number(it.textOffsetY)||0;
   content.style.position='absolute';
   content.style.left=Math.round(relX)+'px';
   content.style.top=Math.round(relY)+'px';
@@ -354,11 +402,13 @@ function positionManualBarText(it,content){
   content.style.padding='0';
   content.style.lineHeight=box.lh+'px';
   content.style.fontSize=box.fs+'px';
-  content.style.fontFamily=`'${(it.font||'Kanit').replace(/[']/g,'')}'`;
+  content.style.fontFamily=`'${(it.font||'DB Helvethaica X').replace(/[']/g,'')}'`;
   content.style.fontWeight='800';
   content.style.textAlign='left';
   content.style.display='block';
   content.style.whiteSpace='pre';
+  it.textX=(Number(it.x)||0)+relX;
+  it.textY=(Number(it.y)||0)+relY;
 }
 function fitBar(it,el){
   const bg=el.querySelector('.bar-bg');
@@ -381,7 +431,7 @@ function fitBar(it,el){
   if(content){
     const padX=m.padX;
     const textW=Math.max(20,...m.lines.map(line=>{
-      const c=document.createElement('canvas').getContext('2d'); c.font=`800 ${m.fs}px '${(it.font||'Kanit').replace(/[']/g,'')}'`; return c.measureText(line||' ').width;
+      const c=document.createElement('canvas').getContext('2d'); c.font=`800 ${m.fs}px '${(it.font||'DB Helvethaica X').replace(/[']/g,'')}'`; return c.measureText(line||' ').width;
     }));
     it.textX=it.textAlign==='center'?it.x+(it.w-textW)/2:it.textAlign==='right'?it.x+it.w-padX-textW:it.x+padX;
     it.textY=it.y+(it.h-m.lines.length*m.lineHeight)/2;
@@ -389,7 +439,7 @@ function fitBar(it,el){
     content.style.left='0'; content.style.top='0'; content.style.width='100%'; content.style.height='100%';
     content.style.padding=`${m.pad}px ${padX}px`;
     content.style.boxSizing='border-box'; content.style.lineHeight=m.lineHeight+'px'; content.style.fontSize=m.fs+'px';
-    content.style.fontFamily=`'${(it.font||'Kanit').replace(/[']/g,'')}'`; content.style.fontWeight='800';
+    content.style.fontFamily=`'${(it.font||'DB Helvethaica X').replace(/[']/g,'')}'`; content.style.fontWeight='800';
     content.style.display='flex'; content.style.alignItems='center';
     content.style.justifyContent=it.textAlign==='center'?'center':it.textAlign==='right'?'flex-end':'flex-start';
     content.style.whiteSpace='pre-wrap';
@@ -428,11 +478,6 @@ function bind(el,handle,it,rotateHandle=null,barTopHandle=null,barBottomHandle=n
       // No horizontal center line and no Y/top-bottom center snap.
       if(Math.abs(nextCx-canvasCx)<=snapPx) nextX=canvasCx-it.w/2;
       it.x=nextX; it.y=nextY;
-      if(it.type==='bar' && it.fit==='manual'){
-        if(!Number.isFinite(Number(it.textX)) || !Number.isFinite(Number(it.textY))) enterManualBar(it);
-        it.textX += it.x-prevX;
-        it.textY += it.y-prevY;
-      }
       // Keep only the vertical center guide visible while dragging.
       showCenterGuides(true,false);
       el.style.left=it.x+'px'; el.style.top=it.y+'px';
@@ -605,7 +650,7 @@ function renderProps(){
  if(it.type==='gradient'){it.opacity=Number.isFinite(Number(it.opacity))?Number(it.opacity):0.85;it.heightRatio=Number.isFinite(Number(it.heightRatio))?Number(it.heightRatio):0.45;html+=`<div class="field"><label>ความเข้มของสีดำ <span id="gopval" class="small" style="float:right">${Math.round(it.opacity*100)}%</span></label><input id="gop" type="range" min="0" max="1" step="0.01" value="${it.opacity}"></div><div class="field"><label>ความสูงของไล่เฉด <span id="ghval" class="small" style="float:right">${Math.round(it.heightRatio*100)}%</span></label><input id="gh" type="range" min="0.15" max="1" step="0.01" value="${it.heightRatio}"></div><div class="small">ไล่เฉดจากโปร่งใสด้านบน → ดำด้านล่าง</div>`;}
  if(it.type==='text'||it.type==='bar'){
  html+=`<div class="field"><label>ข้อความ</label><textarea id="ptext" style="width:100%;min-height:70px;padding:8px;border:1px solid #d6dce4;border-radius:7px">${esc(it.text)}</textarea></div>
- <div class="field"><label>ขนาดตัวอักษร <span id="pfsval" class="small" style="float:right">${it.fontSize}px</span></label><div class="font-size-control"><button class="btn font-size-btn" id="pfsminus" type="button">−</button><input id="pfs" type="range" min="12" max="180" step="1" value="${it.fontSize}" aria-label="ขนาดตัวอักษร"><button class="btn font-size-btn" id="pfsplus" type="button">＋</button></div></div><div class="field"><label>ฟอนต์</label><select id="pfont">${fontOptions(it.font||'Kanit')}</select></div>
+ <div class="field"><label>ขนาดตัวอักษร <span id="pfsval" class="small" style="float:right">${it.fontSize}px</span></label><div class="font-size-control"><button class="btn font-size-btn" id="pfsminus" type="button">−</button><input id="pfs" type="range" min="12" max="500" step="1" value="${it.fontSize}" aria-label="ขนาดตัวอักษร"><button class="btn font-size-btn" id="pfsplus" type="button">＋</button></div></div><div class="field"><label>ฟอนต์</label><select id="pfont">${fontOptions(it.font||'DB Helvethaica X')}</select></div>
 <div class="field"><label>สีตัวอักษร</label><div class="colorbox"><input id="pc" type="color" value="${it.color}"><span id="pcval">${it.color}</span></div></div>`;
  if(it.type==='bar') html+=`<div class="field"><label>สีแถบ</label><div class="colorbox"><input id="pbg" type="color" value="${it.bg}"><span id="pbgval">${it.bg}</span></div></div><div class="field"><label>โหมดแถบ</label><select id="pfit">
 <option value="text" ${it.fit==='text'?'selected':''}>พอดีกับข้อความอัตโนมัติ</option>
@@ -626,14 +671,14 @@ function renderProps(){
    el.style.left=it.x+'px'; el.style.top=it.y+'px'; el.style.width=it.w+'px'; el.style.height=it.h+'px';
    if(it.type==='image'){const im=el.querySelector('img');if(im){it.zoom=Number(it.zoom)||1;im.style.transform=`scale(${it.zoom})`;im.style.objectFit='cover'}el.style.overflow='hidden'}
    if(it.type==='overlay'){const im=el.querySelector('img');it.cropZoom=Number.isFinite(Number(it.cropZoom))?Number(it.cropZoom):1;it.cropX=Number.isFinite(Number(it.cropX))?Number(it.cropX):0;it.cropY=Number.isFinite(Number(it.cropY))?Number(it.cropY):0;applyOverlayShape(el,it);if(im){im.style.objectFit='cover';im.style.width='100%';im.style.height='100%';im.style.transform=`translate(${it.cropX}%,${it.cropY}%) scale(${it.cropZoom})`}}
-   if(it.type==='text'){el.textContent=it.text;el.style.fontSize=it.fontSize+'px';el.style.color=it.color;el.style.fontFamily=it.font||'Kanit';el.style.textAlign=it.textAlign||'left'}
-   if(it.type==='bar'){el.style.fontSize=it.fontSize+'px';el.style.color=it.color;el.style.fontFamily=it.font||'Kanit';el.style.textAlign=it.textAlign||'left';let bg=el.querySelector('.bar-bg'),bc=el.querySelector('.bar-content');if(!bg){bg=document.createElement('div');bg.className='bar-bg';el.prepend(bg)}if(!bc){bc=document.createElement('div');bc.className='bar-content';el.appendChild(bc)}bc.textContent=it.text;fitBar(it,el)}
+   if(it.type==='text'){el.textContent=it.text;el.style.fontSize=it.fontSize+'px';el.style.color=it.color;el.style.fontFamily=it.font||'DB Helvethaica X';el.style.textAlign=it.textAlign||'left'}
+   if(it.type==='bar'){el.style.fontSize=it.fontSize+'px';el.style.color=it.color;el.style.fontFamily=it.font||'DB Helvethaica X';el.style.textAlign=it.textAlign||'left';let bg=el.querySelector('.bar-bg'),bc=el.querySelector('.bar-content');if(!bg){bg=document.createElement('div');bg.className='bar-bg';el.prepend(bg)}if(!bc){bc=document.createElement('div');bc.className='bar-content';el.appendChild(bc)}bc.textContent=it.text;fitBar(it,el)}
    if(it.type==='gradient'){el.style.background=`linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,${it.opacity}) 100%)`;el.style.top=it.y+'px';el.style.height=it.h+'px';}
    saveDraft();
  };
  const bindv=(id,fn)=>{const q=document.getElementById(id);if(q)q.oninput=()=>{fn(q.value);sync()}}
  if(document.getElementById('ptext'))bindv('ptext',v=>it.text=v);
- if(document.getElementById('pfs')){const fsq=document.getElementById('pfs'), fsv=document.getElementById('pfsval'); const setFontSize=v=>{it.fontSize=Math.max(12,Math.min(180,Math.round(+v||12))); fsq.value=it.fontSize; if(fsv)fsv.textContent=it.fontSize+'px'; sync();}; fsq.oninput=()=>setFontSize(fsq.value); const minus=document.getElementById('pfsminus'), plus=document.getElementById('pfsplus'); if(minus)minus.onclick=()=>setFontSize(it.fontSize-2); if(plus)plus.onclick=()=>setFontSize(it.fontSize+2);}
+ if(document.getElementById('pfs')){const fsq=document.getElementById('pfs'), fsv=document.getElementById('pfsval'); const setFontSize=v=>{it.fontSize=Math.max(12,Math.min(500,Math.round(+v||12))); fsq.value=it.fontSize; if(fsv)fsv.textContent=it.fontSize+'px'; sync();}; fsq.oninput=()=>setFontSize(fsq.value); const minus=document.getElementById('pfsminus'), plus=document.getElementById('pfsplus'); if(minus)minus.onclick=()=>setFontSize(it.fontSize-2); if(plus)plus.onclick=()=>setFontSize(it.fontSize+2);}
  if(document.getElementById('pfont'))bindv('pfont',v=>it.font=v);
  if(document.getElementById('pc'))bindv('pc',v=>{it.color=v;const z=document.getElementById('pcval');if(z)z.textContent=v});
  if(document.getElementById('pbg'))bindv('pbg',v=>{it.bg=v;const z=document.getElementById('pbgval');if(z)z.textContent=v});
@@ -645,7 +690,7 @@ function renderProps(){
      if(it.fit!=='manual') fitBar(it,elById());
      enterManualBar(it);
    }else{
-     it.fit=mode; delete it.textX; delete it.textY;
+     it.fit=mode; delete it.textX; delete it.textY; delete it.textOffsetX; delete it.textOffsetY;
    }
    if(mode==='full')it.w=Math.max(40,state.w-it.x);
    sync();
@@ -665,11 +710,9 @@ function renderProps(){
    const n=Math.max(0,+v||0);
    if(k==='px'){
      const oldX=it.x; it.x=Math.min(n,Math.max(0,state.w-it.w));
-     if(it.type==='bar' && it.fit==='manual' && Number.isFinite(Number(it.textX))) it.textX += it.x-oldX;
    }
    if(k==='py'){
      const oldY=it.y; it.y=Math.min(n,Math.max(0,state.h-it.h));
-     if(it.type==='bar' && it.fit==='manual' && Number.isFinite(Number(it.textY))) it.textY += it.y-oldY;
    }
  }));
  const pw=document.getElementById('pw'), ph=document.getElementById('ph');
@@ -749,8 +792,8 @@ function esc(s){return s.replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;
 function newId(){return Math.random().toString(36).slice(2)}
 function add(type,src=''){
  snap(); const it={id:newId(),type,x:40,y:40,w:type==='bar'?500:360,h:type==='bar'?100:240,locked:false};
- if(type==='text'){it.text='ข่าวเด่นวันนี้';it.fontSize=64;it.color='#ffffff';it.font='Kanit'}
- if(type==='bar'){it.text='ข่าวเด่นวันนี้';it.fontSize=64;it.color='#111111';it.bg='#ffe500';it.font='Kanit';it.fit='text';it.pad=6;it.padX=18}
+ if(type==='text'){it.text='ข่าวเด่นวันนี้';it.fontSize=64;it.color='#ffffff';it.font='DB Helvethaica X'}
+ if(type==='bar'){it.text='ข่าวเด่นวันนี้';it.fontSize=64;it.color='#111111';it.bg='#ffe500';it.font='DB Helvethaica X';it.fit='text';it.pad=6;it.padX=18}
  if(type==='gradient'){it.x=0;it.y=Math.round(state.h*0.55);it.w=state.w;it.h=Math.round(state.h*0.45);it.opacity=0.85;it.heightRatio=0.45;it.locked=false}
  if(type==='image'||type==='logo'){it.src=src;it.w=type==='logo'?260:900;it.h=type==='logo'?160:600}
  state.items.push(it);state.selected=it.id;render()
@@ -877,7 +920,7 @@ async function exportCanvas(format='png'){
       x.fillStyle=g; x.fillRect(it.x,it.y,it.w,it.h);
       continue;
     }
-    const fontName=(it.font||'Kanit').replace(/['\\]/g,'');
+    const fontName=(it.font||'DB Helvethaica X').replace(/['\\]/g,'');
     const weight=it.type==='bar'?800:700;
     x.font=`${weight} ${Number(it.fontSize)||64}px '${fontName}'`;
     x.textBaseline='alphabetic';
@@ -924,9 +967,15 @@ async function exportCanvas(format='png'){
         // Manual mode: the bar rectangle is independent from the text block.
         // textY stores the absolute canvas position of the text block.
         x.fillStyle=it.bg||'#ffe500'; x.fillRect(it.x,it.y,barW,barH);
-        x.fillStyle=it.color||'#111'; x.textAlign=it.textAlign==='center'?'center':it.textAlign==='right'?'right':'left';
-        const textX=Number.isFinite(Number(it.textX))?Number(it.textX):(it.textAlign==='center'?it.x+barW/2:it.textAlign==='right'?it.x+barW-padX:it.x+padX);
-        const textTop=Number.isFinite(Number(it.textY))?Number(it.textY):it.y+Math.max(0,(barH-lines.length*lh)/2);
+        // Manual mode uses the text block's TOP-LEFT canvas coordinate,
+        // exactly like the editor. Do not re-interpret it as a center/right anchor.
+        // This keeps Manual Editor and Export in the same coordinate system.
+        x.fillStyle=it.color||'#111';
+        x.textAlign='left';
+        const textX=Number.isFinite(Number(it.textOffsetX)) ? Number(it.x)+Number(it.textOffsetX) :
+          (Number.isFinite(Number(it.textX))?Number(it.textX):it.x+padX);
+        const textTop=Number.isFinite(Number(it.textOffsetY)) ? Number(it.y)+Number(it.textOffsetY) :
+          (Number.isFinite(Number(it.textY))?Number(it.textY):it.y+Math.max(0,(barH-lines.length*lh)/2));
         lines.forEach((line,i)=>x.fillText(line,textX,textTop+lh*(i+0.82)));
       }
       x.textAlign='left';
