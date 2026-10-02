@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Template Studio Online V95</title>
+<title>Template Studio Online V98</title>
 <style>
 @import url('https://fonts.googleapis.com/css2?family=Kanit:wght@400;500;600;700;800&family=Noto+Sans+Thai:wght@400;500;600;700;800&family=Prompt:wght@400;500;600;700;800&family=Sarabun:wght@400;500;600;700&display=swap');
 @font-face{font-family:'DB Helvethaica X Cond';src:url('fonts/DB_Helvethaica_X_Bd_Cond_It_v3_2_ttf.ttf') format('truetype');font-weight:700;font-style:italic;font-display:swap;}
@@ -95,7 +95,7 @@ input[type=color]{width:100%;height:36px;border:0;background:none;padding:0}
 <body>
 <div class="app">
 <header class="top">
-<div class="brand">Template Studio Online V95</div>
+<div class="brand">Template Studio Online V98</div>
 <button class="btn" id="undo">↶ Undo</button><button class="btn" id="redo">↷ Redo</button>
 <button class="btn" id="clear">ล้าง</button><button class="btn" id="loadLatest" title="โหลดงานล่าสุด">↻ ล่าสุด</button><select class="btn" id="exportFormat" aria-label="รูปแบบไฟล์"><option value="png">PNG</option><option value="jpeg">JPG</option></select><button class="btn primary" id="export">Export</button>
 </header>
@@ -186,6 +186,15 @@ function fontOptions(selected){
   const built=['Kanit','Prompt','Noto Sans Thai','Sarabun','Arial','DB Helvethaica X','DB Helvethaica X Cond','DB Helvethaica X Ext'];
   return [...built,...customFonts.map(f=>f.name)].map(f=>`<option ${selected===f?'selected':''}>${f}</option>`).join('');
 }
+function defaultFontWeight(it){ return it.type==='bar' ? 800 : 700; }
+function fontWeightOf(it){ const n=Number(it.fontWeight); return [100,200,300,400,500,600,700,800,900].includes(n)?n:defaultFontWeight(it); }
+function fontStyleOf(it){ return it.fontStyle==='italic' ? 'italic' : 'normal'; }
+function fontCss(it){ return `${fontStyleOf(it)} ${fontWeightOf(it)} ${Number(it.fontSize)||64}px '${(it.font||'DB Helvethaica X').replace(/[\'\\]/g,'')}'`; }
+function fontWeightOptions(selected){
+  const v=Number(selected);
+  return [[100,'Thin'],[200,'Ultra Light'],[300,'Light'],[400,'Regular'],[500,'Medium'],[600,'Semi Bold'],[700,'Bold'],[800,'Extra Bold'],[900,'Black']].map(([n,l])=>`<option value="${n}" ${v===n?'selected':''}>${l} (${n})</option>`).join('');
+}
+function fontStyleOptions(selected){ return `<option value="normal" ${selected!=='italic'?'selected':''}>ปกติ</option><option value="italic" ${selected==='italic'?'selected':''}>Italic</option>`; }
 loadFonts();
 
 function snap(){history.push(JSON.stringify(state)); if(history.length>40)history.shift();future=[]}
@@ -201,7 +210,7 @@ updateViewportHeight();
 
 function measureTextMetrics(it){
   const fs=Number(it.fontSize)||64;
-  const weight=it.type==='bar'?800:700;
+  const weight=fontWeightOf(it);
   const fontName=(it.font||'DB Helvethaica X').replace(/[\'\\]/g,'');
   const ctx=document.createElement('canvas').getContext('2d');
   ctx.font=`${weight} ${fs}px '${fontName}'`;
@@ -264,7 +273,7 @@ function render(){
     const el=document.createElement('div'); el.className='item '+it.type+'-item'+(state.selected===it.id?' selected':'')+(it.locked?' locked':'');
     el.dataset.id=it.id; el.style.left=it.x+'px';el.style.top=it.y+'px';el.style.width=it.w+'px';el.style.height=it.h+'px';el.style.zIndex=i;
     if(it.type==='text'){
-      el.textContent=it.text;el.style.fontSize=it.fontSize+'px';el.style.color=it.color;el.style.fontFamily=it.font||'DB Helvethaica X';
+      el.textContent=it.text;el.style.fontSize=it.fontSize+'px';el.style.color=it.color;el.style.fontFamily=it.font||'DB Helvethaica X';el.style.fontWeight=String(fontWeightOf(it));el.style.fontStyle=fontStyleOf(it);
       // Plain text is content-sized: its drag target follows the actual text,
       // so users don't have to grab a tiny corner of a fixed-width box.
       el.style.width='max-content'; el.style.height='auto'; el.style.textAlign=it.textAlign||'left';
@@ -272,7 +281,7 @@ function render(){
       it.w=measured.w; it.h=measured.h;
       el.style.width=measured.w+'px'; el.style.height=measured.h+'px';
     }
-    if(it.type==='bar'){el.innerHTML='';el.style.fontSize=it.fontSize+'px';el.style.color=it.color;el.style.fontFamily=it.font||'DB Helvethaica X';el.style.textAlign=it.textAlign||'left';const bg=document.createElement('div');bg.className='bar-bg';bg.style.background=it.bg||'#ffe500';const bc=document.createElement('div');bc.className='bar-content';bc.textContent=it.text;el.appendChild(bg);el.appendChild(bc);fitBar(it,el)}
+    if(it.type==='bar'){el.innerHTML='';el.style.fontSize=it.fontSize+'px';el.style.color=it.color;el.style.fontFamily=it.font||'DB Helvethaica X';el.style.fontWeight=String(fontWeightOf(it));el.style.fontStyle=fontStyleOf(it);el.style.textAlign=it.textAlign||'left';const bg=document.createElement('div');bg.className='bar-bg';bg.style.background=it.bg||'#ffe500';const bc=document.createElement('div');bc.className='bar-content';bc.textContent=it.text;el.appendChild(bg);el.appendChild(bc);fitBar(it,el)}
     if(it.type==='gradient'){el.style.background=`linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,${Math.max(0,Math.min(1,Number(it.opacity)||0.85))}) 100%)`;el.style.pointerEvents='none';}
     if(it.type==='image'||it.type==='logo'||it.type==='overlay'){const im=document.createElement('img');im.src=it.src;im.draggable=false;el.appendChild(im);el.style.objectFit='contain';if(it.type==='image'){it.zoom=Number(it.zoom)||1;im.style.transform=`scale(${it.zoom})`;im.style.transformOrigin='center center';im.style.objectFit='cover'} if(it.type==='overlay'){it.cropZoom=Number.isFinite(Number(it.cropZoom))?Number(it.cropZoom):1;it.cropX=Number.isFinite(Number(it.cropX))?Number(it.cropX):0;it.cropY=Number.isFinite(Number(it.cropY))?Number(it.cropY):0;applyOverlayShape(el,it);im.style.objectFit='cover';im.style.width='100%';im.style.height='100%';im.style.transform=`translate(${it.cropX}%,${it.cropY}%) scale(${it.cropZoom})`}}
     const h=document.createElement('div');h.className='resize';
@@ -311,7 +320,7 @@ function measureBarLayout(it, el=null){
   const fontName=(it.font||'DB Helvethaica X').replace(/[']/g,'');
   const padX=Math.max(0,Number(it.padX)||0);
   const ctx=document.createElement('canvas').getContext('2d');
-  ctx.font=`800 ${fs}px '${fontName}'`;
+  ctx.font=fontCss(it);
   const metricFor=(text)=>{
     const m=ctx.measureText(text||' ');
     const a=Math.max(Number.isFinite(m.actualBoundingBoxAscent)?m.actualBoundingBoxAscent:0,Number.isFinite(m.fontBoundingBoxAscent)?m.fontBoundingBoxAscent:0,fs*.78);
@@ -333,7 +342,7 @@ function measureBarLayout(it, el=null){
   const metrics=lines.map(metricFor);
   const maxGlyph=metrics.reduce((m,v)=>Math.max(m,v.total),fs);
   const lineHeight=Math.max(Math.ceil(fs*1.06),Math.ceil(maxGlyph+4));
-  const padY=2;
+  const padY=Math.max(0,Number(it.pad)||0);
   const height=Math.max(lineHeight+padY*2,Math.ceil(lines.length*lineHeight+padY*2));
   if(el){
     el.style.width=targetW+'px'; el.style.height=height+'px'; el.style.padding='0'; el.style.lineHeight='normal';
@@ -341,44 +350,43 @@ function measureBarLayout(it, el=null){
     if(content){
       content.style.boxSizing='border-box'; content.style.width='100%'; content.style.height='100%';
       content.style.padding=`${padY}px ${padX}px`; content.style.lineHeight=lineHeight+'px'; content.style.whiteSpace='pre-wrap';
-      content.style.fontSize=fs+'px'; content.style.fontFamily=`'${fontName}'`; content.style.fontWeight='800';
+      content.style.fontSize=fs+'px'; content.style.fontFamily=`'${fontName}'`; content.style.fontWeight=String(fontWeightOf(it));
+      content.style.fontStyle=fontStyleOf(it);
       content.style.display='flex'; content.style.pointerEvents='none'; content.style.alignItems='center';
       content.style.justifyContent=it.textAlign==='center'?'center':it.textAlign==='right'?'flex-end':'flex-start';
     }
   }
   return {lines,targetW,height,lineHeight,pad:padY,padX,fs,metrics};
 }
-function getManualBarTextBox(it){
+function getBarTextMetrics(it){
   const fs=Math.max(12,Number(it.fontSize)||64);
-  const lh=Math.max(Math.ceil(fs*1.06),Math.ceil(fs));
-  const text=String(it.text||'');
-  const lines=text.split('\n');
-  const blockH=Math.max(lh,lines.length*lh);
-  return {fs,lh,blockH};
-}
-function getManualBarTextBox(it){
-  const fs=Math.max(12,Number(it.fontSize)||64);
-  const lh=Math.max(Math.ceil(fs*1.06),Math.ceil(fs));
-  const text=String(it.text||'');
-  const lines=text.split('\n');
-  const blockH=Math.max(lh,lines.length*lh);
+  const weight=fontWeightOf(it);
+  const style=fontStyleOf(it);
+  const fontName=(it.font||'DB Helvethaica X').replace(/[\'\\]/g,'');
   const ctx=document.createElement('canvas').getContext('2d');
-  ctx.font=`800 ${fs}px '${(it.font||'DB Helvethaica X').replace(/[']/g,'')}'`;
-  const widths=lines.map(line=>ctx.measureText(line||' ').width);
-  return {fs,lh,blockH,width:Math.max(20,...widths)};
+  ctx.font=`${style} ${weight} ${fs}px '${fontName}'`;
+  const lines=String(it.text||'').split('\\n');
+  const metrics=lines.map(line=>{
+    const m=ctx.measureText(line||' ');
+    const a=Math.max(Number.isFinite(m.actualBoundingBoxAscent)?m.actualBoundingBoxAscent:0,Number.isFinite(m.fontBoundingBoxAscent)?m.fontBoundingBoxAscent:0,Number.isFinite(m.emHeightAscent)?m.emHeightAscent:0,fs*.78);
+    const d=Math.max(Number.isFinite(m.actualBoundingBoxDescent)?m.actualBoundingBoxDescent:0,Number.isFinite(m.fontBoundingBoxDescent)?m.fontBoundingBoxDescent:0,Number.isFinite(m.emHeightDescent)?m.emHeightDescent:0,fs*.22);
+    return {a,d,total:a+d,width:m.width};
+  });
+  const maxGlyph=Math.max(fs,...metrics.map(m=>m.total));
+  const lineHeight=Math.max(Math.ceil(fs*1.06),Math.ceil(maxGlyph+4));
+  const width=Math.max(20,...metrics.map(m=>m.width));
+  const blockH=Math.max(lineHeight,lines.length*lineHeight);
+  return {fs,weight,style,fontName,lines,metrics,lineHeight,blockH,width};
 }
+function getManualBarTextBox(it){ return getBarTextMetrics(it); }
 function enterManualBar(it){
   if(it.type!=='bar')return;
   const x=Number(it.x)||0, y=Number(it.y)||0;
   const w=Math.max(20,Number(it.w)||100), h=Math.max(20,Number(it.h)||100);
   const box=getManualBarTextBox(it);
-  const padX=Number(it.padX)||0;
-  // Manual mode stores text position as an OFFSET inside the Bar group.
-  // The offset stays fixed when the Bar is moved or resized.
+  const padX=Math.max(0,Number(it.padX)||0);
   if(!Number.isFinite(Number(it.textOffsetX))){
-    const absX=Number.isFinite(Number(it.textX))?Number(it.textX):
-      (it.textAlign==='center'?x+(w-box.width)/2:
-       it.textAlign==='right'?x+w-padX-box.width:x+padX);
+    const absX=Number.isFinite(Number(it.textX))?Number(it.textX):(it.textAlign==='center'?x+(w-box.width)/2:it.textAlign==='right'?x+w-padX-box.width:x+padX);
     it.textOffsetX=absX-x;
   }
   if(!Number.isFinite(Number(it.textOffsetY))){
@@ -392,23 +400,12 @@ function enterManualBar(it){
 function positionManualBarText(it,content){
   if(!content)return;
   const box=getManualBarTextBox(it);
-  const relX=Number(it.textOffsetX)||0;
-  const relY=Number(it.textOffsetY)||0;
-  content.style.position='absolute';
-  content.style.left=Math.round(relX)+'px';
-  content.style.top=Math.round(relY)+'px';
-  content.style.width=Math.max(box.width,20)+'px';
-  content.style.height=box.blockH+'px';
-  content.style.padding='0';
-  content.style.lineHeight=box.lh+'px';
-  content.style.fontSize=box.fs+'px';
-  content.style.fontFamily=`'${(it.font||'DB Helvethaica X').replace(/[']/g,'')}'`;
-  content.style.fontWeight='800';
-  content.style.textAlign='left';
-  content.style.display='block';
-  content.style.whiteSpace='pre';
-  it.textX=(Number(it.x)||0)+relX;
-  it.textY=(Number(it.y)||0)+relY;
+  const relX=Number(it.textOffsetX)||0, relY=Number(it.textOffsetY)||0;
+  content.style.position='absolute'; content.style.left=relX+'px'; content.style.top=relY+'px';
+  content.style.width=Math.max(box.width,20)+'px'; content.style.height=box.blockH+'px'; content.style.padding='0';
+  content.style.lineHeight=box.lineHeight+'px'; content.style.fontSize=box.fs+'px'; content.style.fontFamily=`'${box.fontName}'`;
+  content.style.fontWeight=String(box.weight); content.style.fontStyle=box.style; content.style.textAlign='left'; content.style.display='block'; content.style.whiteSpace='pre'; content.style.boxSizing='border-box';
+  it.textX=(Number(it.x)||0)+relX; it.textY=(Number(it.y)||0)+relY;
 }
 function fitBar(it,el){
   const bg=el.querySelector('.bar-bg');
@@ -431,7 +428,7 @@ function fitBar(it,el){
   if(content){
     const padX=m.padX;
     const textW=Math.max(20,...m.lines.map(line=>{
-      const c=document.createElement('canvas').getContext('2d'); c.font=`800 ${m.fs}px '${(it.font||'DB Helvethaica X').replace(/[']/g,'')}'`; return c.measureText(line||' ').width;
+      const c=document.createElement('canvas').getContext('2d'); c.font=fontCss(it).replace(`${Number(it.fontSize)||64}px`,`${m.fs}px`); return c.measureText(line||' ').width;
     }));
     it.textX=it.textAlign==='center'?it.x+(it.w-textW)/2:it.textAlign==='right'?it.x+it.w-padX-textW:it.x+padX;
     it.textY=it.y+(it.h-m.lines.length*m.lineHeight)/2;
@@ -439,7 +436,8 @@ function fitBar(it,el){
     content.style.left='0'; content.style.top='0'; content.style.width='100%'; content.style.height='100%';
     content.style.padding=`${m.pad}px ${padX}px`;
     content.style.boxSizing='border-box'; content.style.lineHeight=m.lineHeight+'px'; content.style.fontSize=m.fs+'px';
-    content.style.fontFamily=`'${(it.font||'DB Helvethaica X').replace(/[']/g,'')}'`; content.style.fontWeight='800';
+    content.style.fontFamily=`'${(it.font||'DB Helvethaica X').replace(/[']/g,'')}'`; content.style.fontWeight=String(fontWeightOf(it));
+      content.style.fontStyle=fontStyleOf(it);
     content.style.display='flex'; content.style.alignItems='center';
     content.style.justifyContent=it.textAlign==='center'?'center':it.textAlign==='right'?'flex-end':'flex-start';
     content.style.whiteSpace='pre-wrap';
@@ -495,8 +493,10 @@ function bind(el,handle,it,rotateHandle=null,barTopHandle=null,barBottomHandle=n
     }else if(barTopResizing){
       const dy=(ev.clientY-sy)/sc;
       const bottom=oy+oh;
-      const minH=20;
-      // textY is deliberately NOT changed here. The text stays fixed on the canvas.
+      const box=getManualBarTextBox(it);
+      const relY=Number(it.textOffsetY)||0;
+      const minH=Math.max(20,relY+box.blockH);
+      // Text position stays fixed; the top edge cannot cross the text block.
       let ny=Math.max(0,Math.min(bottom-minH,oy+dy));
       it.y=ny;
       it.h=Math.max(minH,bottom-ny);
@@ -505,7 +505,9 @@ function bind(el,handle,it,rotateHandle=null,barTopHandle=null,barBottomHandle=n
       if(content) positionManualBarText(it,content);
     }else if(barBottomResizing){
       const dy=(ev.clientY-sy)/sc;
-      const minH=20;
+      const box=getManualBarTextBox(it);
+      const relY=Number(it.textOffsetY)||0;
+      const minH=Math.max(20,relY+box.blockH);
       // Only the bottom edge changes. Bar top and text absolute position stay fixed.
       it.h=Math.max(minH,Math.min(state.h-it.y,oh+dy));
       el.style.height=it.h+'px';
@@ -651,6 +653,8 @@ function renderProps(){
  if(it.type==='text'||it.type==='bar'){
  html+=`<div class="field"><label>ข้อความ</label><textarea id="ptext" style="width:100%;min-height:70px;padding:8px;border:1px solid #d6dce4;border-radius:7px">${esc(it.text)}</textarea></div>
  <div class="field"><label>ขนาดตัวอักษร <span id="pfsval" class="small" style="float:right">${it.fontSize}px</span></label><div class="font-size-control"><button class="btn font-size-btn" id="pfsminus" type="button">−</button><input id="pfs" type="range" min="12" max="500" step="1" value="${it.fontSize}" aria-label="ขนาดตัวอักษร"><button class="btn font-size-btn" id="pfsplus" type="button">＋</button></div></div><div class="field"><label>ฟอนต์</label><select id="pfont">${fontOptions(it.font||'DB Helvethaica X')}</select></div>
+<div class="field"><label>น้ำหนักตัวอักษร</label><select id="pweight">${fontWeightOptions(fontWeightOf(it))}</select></div>
+<div class="field"><label>รูปแบบ</label><select id="pstyle">${fontStyleOptions(fontStyleOf(it))}</select></div>
 <div class="field"><label>สีตัวอักษร</label><div class="colorbox"><input id="pc" type="color" value="${it.color}"><span id="pcval">${it.color}</span></div></div>`;
  if(it.type==='bar') html+=`<div class="field"><label>สีแถบ</label><div class="colorbox"><input id="pbg" type="color" value="${it.bg}"><span id="pbgval">${it.bg}</span></div></div><div class="field"><label>โหมดแถบ</label><select id="pfit">
 <option value="text" ${it.fit==='text'?'selected':''}>พอดีกับข้อความอัตโนมัติ</option>
@@ -671,8 +675,8 @@ function renderProps(){
    el.style.left=it.x+'px'; el.style.top=it.y+'px'; el.style.width=it.w+'px'; el.style.height=it.h+'px';
    if(it.type==='image'){const im=el.querySelector('img');if(im){it.zoom=Number(it.zoom)||1;im.style.transform=`scale(${it.zoom})`;im.style.objectFit='cover'}el.style.overflow='hidden'}
    if(it.type==='overlay'){const im=el.querySelector('img');it.cropZoom=Number.isFinite(Number(it.cropZoom))?Number(it.cropZoom):1;it.cropX=Number.isFinite(Number(it.cropX))?Number(it.cropX):0;it.cropY=Number.isFinite(Number(it.cropY))?Number(it.cropY):0;applyOverlayShape(el,it);if(im){im.style.objectFit='cover';im.style.width='100%';im.style.height='100%';im.style.transform=`translate(${it.cropX}%,${it.cropY}%) scale(${it.cropZoom})`}}
-   if(it.type==='text'){el.textContent=it.text;el.style.fontSize=it.fontSize+'px';el.style.color=it.color;el.style.fontFamily=it.font||'DB Helvethaica X';el.style.textAlign=it.textAlign||'left'}
-   if(it.type==='bar'){el.style.fontSize=it.fontSize+'px';el.style.color=it.color;el.style.fontFamily=it.font||'DB Helvethaica X';el.style.textAlign=it.textAlign||'left';let bg=el.querySelector('.bar-bg'),bc=el.querySelector('.bar-content');if(!bg){bg=document.createElement('div');bg.className='bar-bg';el.prepend(bg)}if(!bc){bc=document.createElement('div');bc.className='bar-content';el.appendChild(bc)}bc.textContent=it.text;fitBar(it,el)}
+   if(it.type==='text'){el.textContent=it.text;el.style.fontSize=it.fontSize+'px';el.style.color=it.color;el.style.fontFamily=it.font||'DB Helvethaica X';el.style.fontWeight=String(fontWeightOf(it));el.style.fontStyle=fontStyleOf(it);el.style.textAlign=it.textAlign||'left'}
+   if(it.type==='bar'){el.style.fontSize=it.fontSize+'px';el.style.color=it.color;el.style.fontFamily=it.font||'DB Helvethaica X';el.style.fontWeight=String(fontWeightOf(it));el.style.fontStyle=fontStyleOf(it);el.style.textAlign=it.textAlign||'left';let bg=el.querySelector('.bar-bg'),bc=el.querySelector('.bar-content');if(!bg){bg=document.createElement('div');bg.className='bar-bg';el.prepend(bg)}if(!bc){bc=document.createElement('div');bc.className='bar-content';el.appendChild(bc)}bc.textContent=it.text;fitBar(it,el)}
    if(it.type==='gradient'){el.style.background=`linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,${it.opacity}) 100%)`;el.style.top=it.y+'px';el.style.height=it.h+'px';}
    saveDraft();
  };
@@ -680,6 +684,8 @@ function renderProps(){
  if(document.getElementById('ptext'))bindv('ptext',v=>it.text=v);
  if(document.getElementById('pfs')){const fsq=document.getElementById('pfs'), fsv=document.getElementById('pfsval'); const setFontSize=v=>{it.fontSize=Math.max(12,Math.min(500,Math.round(+v||12))); fsq.value=it.fontSize; if(fsv)fsv.textContent=it.fontSize+'px'; sync();}; fsq.oninput=()=>setFontSize(fsq.value); const minus=document.getElementById('pfsminus'), plus=document.getElementById('pfsplus'); if(minus)minus.onclick=()=>setFontSize(it.fontSize-2); if(plus)plus.onclick=()=>setFontSize(it.fontSize+2);}
  if(document.getElementById('pfont'))bindv('pfont',v=>it.font=v);
+ if(document.getElementById('pweight'))bindv('pweight',v=>it.fontWeight=Number(v));
+ if(document.getElementById('pstyle'))bindv('pstyle',v=>it.fontStyle=v);
  if(document.getElementById('pc'))bindv('pc',v=>{it.color=v;const z=document.getElementById('pcval');if(z)z.textContent=v});
  if(document.getElementById('pbg'))bindv('pbg',v=>{it.bg=v;const z=document.getElementById('pbgval');if(z)z.textContent=v});
  if(document.getElementById('pfit'))document.getElementById('pfit').onchange=()=>{
@@ -731,7 +737,13 @@ function renderProps(){
      const ratio=Number(it.aspectRatio)||(it.w/Math.max(1,it.h));
      it.h=n; it.w=Math.max(20,n*ratio);
      if(pw) pw.value=Math.round(it.w);
-   }else it.h=n;
+   }else {
+     if(it.type==='bar' && it.fit==='manual'){
+       const box=getManualBarTextBox(it);
+       const relY=Number(it.textOffsetY)||0;
+       it.h=Math.max(n,relY+box.blockH);
+     }else it.h=n;
+   }
    sync();
  };
  const prot=document.getElementById('prot');
@@ -792,8 +804,8 @@ function esc(s){return s.replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;
 function newId(){return Math.random().toString(36).slice(2)}
 function add(type,src=''){
  snap(); const it={id:newId(),type,x:40,y:40,w:type==='bar'?500:360,h:type==='bar'?100:240,locked:false};
- if(type==='text'){it.text='ข่าวเด่นวันนี้';it.fontSize=64;it.color='#ffffff';it.font='DB Helvethaica X'}
- if(type==='bar'){it.text='ข่าวเด่นวันนี้';it.fontSize=64;it.color='#111111';it.bg='#ffe500';it.font='DB Helvethaica X';it.fit='text';it.pad=6;it.padX=18}
+ if(type==='text'){it.text='ข่าวเด่นวันนี้';it.fontSize=64;it.color='#ffffff';it.font='DB Helvethaica X';it.fontWeight=700;it.fontStyle='normal'}
+ if(type==='bar'){it.text='ข่าวเด่นวันนี้';it.fontSize=64;it.color='#111111';it.bg='#ffe500';it.font='DB Helvethaica X';it.fontWeight=700;it.fontStyle='normal';it.fit='text';it.pad=6;it.padX=18}
  if(type==='gradient'){it.x=0;it.y=Math.round(state.h*0.55);it.w=state.w;it.h=Math.round(state.h*0.45);it.opacity=0.85;it.heightRatio=0.45;it.locked=false}
  if(type==='image'||type==='logo'){it.src=src;it.w=type==='logo'?260:900;it.h=type==='logo'?160:600}
  state.items.push(it);state.selected=it.id;render()
@@ -921,8 +933,8 @@ async function exportCanvas(format='png'){
       continue;
     }
     const fontName=(it.font||'DB Helvethaica X').replace(/['\\]/g,'');
-    const weight=it.type==='bar'?800:700;
-    x.font=`${weight} ${Number(it.fontSize)||64}px '${fontName}'`;
+    const weight=fontWeightOf(it);
+    x.font=fontCss(it);
     x.textBaseline='alphabetic';
 
     if(it.type==='text'){
@@ -963,20 +975,20 @@ async function exportCanvas(format='png'){
       }else{
         const maxContent=Math.max(20,barW-padX*2);
         for(const para of raw) lines.push(...wrapLines(x,para,maxContent));
-        const lh=Math.max(Math.ceil(fs*1.06),Math.ceil(fs));
-        // Manual mode: the bar rectangle is independent from the text block.
-        // textY stores the absolute canvas position of the text block.
+        const box=getBarTextMetrics(it);
+        const lh=box.lineHeight;
         x.fillStyle=it.bg||'#ffe500'; x.fillRect(it.x,it.y,barW,barH);
-        // Manual mode uses the text block's TOP-LEFT canvas coordinate,
-        // exactly like the editor. Do not re-interpret it as a center/right anchor.
-        // This keeps Manual Editor and Export in the same coordinate system.
         x.fillStyle=it.color||'#111';
         x.textAlign='left';
         const textX=Number.isFinite(Number(it.textOffsetX)) ? Number(it.x)+Number(it.textOffsetX) :
           (Number.isFinite(Number(it.textX))?Number(it.textX):it.x+padX);
         const textTop=Number.isFinite(Number(it.textOffsetY)) ? Number(it.y)+Number(it.textOffsetY) :
-          (Number.isFinite(Number(it.textY))?Number(it.textY):it.y+Math.max(0,(barH-lines.length*lh)/2));
-        lines.forEach((line,i)=>x.fillText(line,textX,textTop+lh*(i+0.82)));
+          (Number.isFinite(Number(it.textY))?Number(it.textY):it.y+Math.max(0,(barH-box.blockH)/2));
+        lines.forEach((line,i)=>{
+          const mm=box.metrics[i]||box.metrics[box.metrics.length-1]||{a:fs*.78,d:fs*.22,total:fs};
+          const baseline=textTop+i*lh+(lh-mm.total)/2+mm.a;
+          x.fillText(line,textX,baseline);
+        });
       }
       x.textAlign='left';
       continue;
