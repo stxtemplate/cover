@@ -1,7 +1,3 @@
-# Template Studio Web V70
+# Template Studio Online V91
 
-ต่อยอดจาก V68 โดยเพิ่มรูปแบบกรอบ Overlay Image และคงระบบหมุนภาพ/จุดจับหมุนเดิม
-
-กรอบ: สี่เหลี่ยม, มุมมน, วงกลม, วงรี, แนวนอน, แนวตั้ง, ข้าวหลามตัด, หกเหลี่ยม, ตัดมุม
-
-หมายเหตุ: กรอบรูปทรงพิเศษใช้ clip-path ในหน้าเว็บ และวาดซ้ำเป็น path ตอน Export PNG/JPG
+V91: removed the horizontal center guide and Y/top-bottom center snap. The vertical center guide and left-right center snap remain. Other editor features are preserved from V90.
