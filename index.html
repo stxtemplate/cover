@@ -221,20 +221,39 @@ function saveFonts(){localStorage.setItem('templateStudioFonts', JSON.stringify(
 const customFontFaces=new Map();
 async function registerFont(name, dataUrl){
   const clean=String(name).replace(/[\'\\]/g,'');
+  if(!dataUrl) return null;
   try{
     if(customFontFaces.has(clean)) return customFontFaces.get(clean);
     if('FontFace' in window && document.fonts){
-      const face=new FontFace(clean, `url(${dataUrl})`, {weight:'100 900', style:'normal'});
-      const loaded=await face.load();
-      document.fonts.add(loaded);
-      customFontFaces.set(clean,loaded);
-      return loaded;
+      const faces=[];
+      // Register the same uploaded file at each common weight. This is intentional:
+      // uploaded TTF/OTF/WOFF files are usually static fonts, not variable fonts.
+      // Using a 100–900 variable range can make Safari/Chrome skip the custom face
+      // during font matching, especially for standalone Text elements.
+      for(const weight of [100,200,300,400,500,600,700,800,900]){
+        const face=new FontFace(clean, `url(${dataUrl})`, {weight:String(weight), style:'normal', display:'block'});
+        const loaded=await face.load();
+        document.fonts.add(loaded);
+        faces.push(loaded);
+      }
+      customFontFaces.set(clean,faces);
+      return faces;
     }
   }catch(e){ console.warn('FontFace load failed',clean,e); }
   const style=document.createElement('style');
-  style.textContent=`@font-face{font-family:'${clean}';src:url(${dataUrl});font-weight:100 900;font-style:normal;font-display:block}`;
+  style.dataset.customFont=clean;
+  style.textContent=[100,200,300,400,500,600,700,800,900].map(w=>`@font-face{font-family:'${clean}';src:url(${dataUrl});font-weight:${w};font-style:normal;font-display:block}`).join('');
   document.head.appendChild(style);
-  return null;
+  customFontFaces.set(clean,[style]);
+  return [style];
+}
+async function ensureCustomFontLoaded(name, weight=400){
+  const clean=String(name||'').replace(/[\'\\]/g,'');
+  if(!isCustomFont(clean)) return;
+  const found=customFonts.find(f=>f.name===clean);
+  if(!found) return;
+  if(!customFontFaces.has(clean)) await registerFont(clean,found.data);
+  try{ await document.fonts.load(`${Number(weight)||400} 64px '${clean}'`); }catch(e){}
 }
 async function loadFonts(){
   for(const f of customFonts){ try{ await registerFont(f.name,f.data); }catch(e){} }
@@ -767,15 +786,17 @@ function renderProps(){
  const bindv=(id,fn)=>{const q=document.getElementById(id);if(q)q.oninput=()=>{fn(q.value);sync()}}
  if(document.getElementById('ptext'))bindv('ptext',v=>it.text=v);
  if(document.getElementById('pfs')){const fsq=document.getElementById('pfs'), fsv=document.getElementById('pfsval'); const setFontSize=v=>{it.fontSize=Math.max(12,Math.min(500,Math.round(+v||12))); fsq.value=it.fontSize; if(fsv)fsv.textContent=it.fontSize+'px'; sync();}; fsq.oninput=()=>setFontSize(fsq.value); const minus=document.getElementById('pfsminus'), plus=document.getElementById('pfsplus'); if(minus)minus.onclick=()=>setFontSize(it.fontSize-2); if(plus)plus.onclick=()=>setFontSize(it.fontSize+2);}
- if(document.getElementById('pfont')){ const q=document.getElementById('pfont'); q.onchange=async()=>{ it.font=q.value; const family=String(it.font||'DB Helvethaica X').replace(/[']/g,''); try{ if(isCustomFont(family)) await registerFont(family, customFonts.find(f=>f.name===family)?.data||''); await document.fonts.load(`400 64px '${family}'`); if(document.fonts.ready) await document.fonts.ready; }catch(e){} sync(); render(); renderProps(); }; }
- if(document.getElementById('pfw')){const q=document.getElementById('pfw'),v=document.getElementById('pfwval');q.oninput=()=>{it.w=Math.max(40,Math.min(state.w,Math.round(+q.value||40)));if(v)v.textContent=it.w+'px';sync();render();renderProps();};}
- if(document.getElementById('pfh')){const q=document.getElementById('pfh'),v=document.getElementById('pfhval');q.oninput=()=>{it.h=Math.max(10,Math.min(state.h,Math.round(+q.value||10)));if(v)v.textContent=it.h+'px';sync();render();renderProps();};}
+ if(document.getElementById('pfont')){ const q=document.getElementById('pfont'); q.onchange=async()=>{ it.font=q.value; const family=String(it.font||'DB Helvethaica X').replace(/[']/g,''); try{ await ensureCustomFontLoaded(family,fontWeightOf(it)); await document.fonts.load(`${fontWeightOf(it)} 64px '${family}'`); if(document.fonts.ready) await document.fonts.ready; }catch(e){} sync(); render(); renderProps(); }; }
+ const smoothBarUpdate=(axis,value)=>{ const el=elById(); if(!el)return; if(axis==='w'){it.w=Math.max(40,Math.min(state.w,Number(value)||40));el.style.width=it.w+'px';}else{it.h=Math.max(10,Math.min(state.h,Number(value)||10));el.style.height=it.h+'px';} if(it.type==='bar'&&it.fit==='manual'){const bg=el.querySelector('.bar-bg');const bc=el.querySelector('.bar-content');if(bg)bg.style.height='100%';if(bc){bc.style.maxWidth='100%';}} };
+ const finishBarSlider=()=>{saveDraft();renderProps();};
+ if(document.getElementById('pfw')){const q=document.getElementById('pfw'),v=document.getElementById('pfwval');q.oninput=()=>{smoothBarUpdate('w',q.value);if(v)v.textContent=Math.round(it.w)+'px';};q.onchange=finishBarSlider;q.onpointerup=finishBarSlider;}
+ if(document.getElementById('pfh')){const q=document.getElementById('pfh'),v=document.getElementById('pfhval');q.oninput=()=>{smoothBarUpdate('h',q.value);if(v)v.textContent=Math.round(it.h)+'px';};q.onchange=finishBarSlider;q.onpointerup=finishBarSlider;}
  if(document.getElementById('pfw50'))document.getElementById('pfw50').onclick=()=>{it.w=Math.round(state.w*.5);sync();render();renderProps();};
  if(document.getElementById('pfwfull'))document.getElementById('pfwfull').onclick=()=>{it.w=state.w;it.x=0;sync();render();renderProps();};
- if(document.getElementById('pweight'))bindv('pweight',v=>it.fontWeight=Number(v));
+ if(document.getElementById('pweight')){const wq=document.getElementById('pweight');wq.onchange=async()=>{it.fontWeight=Number(wq.value)||400;await ensureCustomFontLoaded(it.font,it.fontWeight);sync();render();};}
  if(it.type==='bar'&&it.fit==='manual'){
-   if(document.getElementById('pbw')){const q=document.getElementById('pbw'),v=document.getElementById('pbwval');q.oninput=()=>{it.w=Math.max(40,Math.min(state.w,Math.round(+q.value||40)));if(v)v.textContent=it.w+'px';sync();render();renderProps();};}
-   if(document.getElementById('pbh')){const q=document.getElementById('pbh'),v=document.getElementById('pbhval');q.oninput=()=>{it.h=Math.max(10,Math.min(state.h,Math.round(+q.value||10)));if(v)v.textContent=it.h+'px';sync();render();renderProps();};}
+   if(document.getElementById('pbw')){const q=document.getElementById('pbw'),v=document.getElementById('pbwval');q.oninput=()=>{smoothBarUpdate('w',q.value);if(v)v.textContent=Math.round(it.w)+'px';};q.onchange=finishBarSlider;q.onpointerup=finishBarSlider;}
+   if(document.getElementById('pbh')){const q=document.getElementById('pbh'),v=document.getElementById('pbhval');q.oninput=()=>{smoothBarUpdate('h',q.value);if(v)v.textContent=Math.round(it.h)+'px';};q.onchange=finishBarSlider;q.onpointerup=finishBarSlider;}
  }
  if(document.getElementById('pstyle'))bindv('pstyle',v=>it.fontStyle=v);
  if(document.getElementById('pc'))bindv('pc',v=>{it.color=v;const z=document.getElementById('pcval');if(z)z.textContent=v});
