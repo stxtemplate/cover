@@ -218,14 +218,28 @@ function loadDraft(){
 
 let customFonts = JSON.parse(localStorage.getItem('templateStudioFonts') || '[]');
 function saveFonts(){localStorage.setItem('templateStudioFonts', JSON.stringify(customFonts))}
-function registerFont(name, dataUrl){
+const customFontFaces=new Map();
+async function registerFont(name, dataUrl){
+  const clean=String(name).replace(/[\'\\]/g,'');
+  try{
+    if(customFontFaces.has(clean)) return customFontFaces.get(clean);
+    if('FontFace' in window && document.fonts){
+      const face=new FontFace(clean, `url(${dataUrl})`, {weight:'100 900', style:'normal'});
+      const loaded=await face.load();
+      document.fonts.add(loaded);
+      customFontFaces.set(clean,loaded);
+      return loaded;
+    }
+  }catch(e){ console.warn('FontFace load failed',clean,e); }
   const style=document.createElement('style');
-  style.textContent=`@font-face{font-family:'${name.replace(/'/g,"")}';src:url(${dataUrl}) format('truetype');font-weight:400;font-style:normal}`;
+  style.textContent=`@font-face{font-family:'${clean}';src:url(${dataUrl});font-weight:100 900;font-style:normal;font-display:block}`;
   document.head.appendChild(style);
+  return null;
 }
-function loadFonts(){
-  customFonts.forEach(f=>registerFont(f.name,f.data));
+async function loadFonts(){
+  for(const f of customFonts){ try{ await registerFont(f.name,f.data); }catch(e){} }
 }
+
 function isCustomFont(name){ return customFonts.some(f=>f.name===name); }
 function fontOptions(selected){
   const built=['Kanit','Prompt','Noto Sans Thai','Sarabun','Arial','DB Helvethaica X','DB Helvethaica X Cond','DB Helvethaica X Ext'];
@@ -715,7 +729,7 @@ function renderProps(){
  if(it.type==='overlay'){it.shape=it.shape||'circle';it.borderWidth=Number.isFinite(Number(it.borderWidth))?Number(it.borderWidth):6;it.borderColor=it.borderColor||'#ffffff';it.cropZoom=Number.isFinite(Number(it.cropZoom))?Number(it.cropZoom):1;it.cropX=Number.isFinite(Number(it.cropX))?Number(it.cropX):0;it.cropY=Number.isFinite(Number(it.cropY))?Number(it.cropY):0;html+=`<div class="field"><label>รูปแบบกรอบ</label><select id="oshape"><option value="square" ${it.shape==='square'?'selected':''}>สี่เหลี่ยม</option><option value="rounded" ${it.shape==='rounded'?'selected':''}>สี่เหลี่ยมมุมมน</option><option value="circle" ${it.shape==='circle'?'selected':''}>วงกลม</option><option value="ellipse" ${it.shape==='ellipse'?'selected':''}>วงรี</option><option value="horizontal" ${it.shape==='horizontal'?'selected':''}>กรอบแนวนอน</option><option value="vertical" ${it.shape==='vertical'?'selected':''}>กรอบแนวตั้ง</option><option value="diamond" ${it.shape==='diamond'?'selected':''}>ข้าวหลามตัด ◆</option><option value="hexagon" ${it.shape==='hexagon'?'selected':''}>หกเหลี่ยม ⬡</option><option value="chamfer" ${it.shape==='chamfer'?'selected':''}>ตัดมุม ⬟</option></select></div><div class="field"><label>ขนาดภาพภายในกรอบ <span id="ocropzval" class="small" style="float:right">${Math.round(it.cropZoom*100)}%</span></label><div class="font-size-control"><button class="btn font-size-btn" id="ocropzminus" type="button">−</button><input id="ocropz" type="range" min="0.5" max="3" step="0.05" value="${it.cropZoom}"><button class="btn font-size-btn" id="ocropzplus" type="button">＋</button></div></div><div class="field"><label>ตำแหน่งภาพแนวนอน <span id="ocropxval" class="small" style="float:right">${Math.round(it.cropX)}%</span></label><input id="ocropx" type="range" min="-100" max="100" step="1" value="${it.cropX}"></div><div class="field"><label>ตำแหน่งภาพแนวตั้ง <span id="ocropyval" class="small" style="float:right">${Math.round(it.cropY)}%</span></label><input id="ocropy" type="range" min="-100" max="100" step="1" value="${it.cropY}"></div><div class="field"><label>ความหนากรอบ <span id="obwval" class="small" style="float:right">${it.borderWidth}px</span></label><input id="obw" type="range" min="0" max="20" step="1" value="${it.borderWidth}"></div><div class="field"><label>สีกรอบ</label><div class="colorbox"><input id="obc" type="color" value="${it.borderColor}"><span id="obcval">${it.borderColor}</span></div></div><div class="field"><label>เปลี่ยนภาพ</label><button class="btn" id="replaceOverlay" type="button" style="width:100%">🖼️ เลือกภาพใหม่</button></div>`;}
  if(it.type==='freebar'){
    it.bg=it.bg||'#ffe500'; it.opacity=Number.isFinite(Number(it.opacity))?Number(it.opacity):1; it.borderColor=it.borderColor||'#000000'; it.borderWidth=Number.isFinite(Number(it.borderWidth))?Number(it.borderWidth):0; it.radius=Number.isFinite(Number(it.radius))?Number(it.radius):0;
-   html+=`<div class="field"><label>สีบาร์</label><div class="colorbox"><input id="pfbg" type="color" value="${it.bg}"><span id="pfbgval">${it.bg}</span></div></div><div class="field"><label>Opacity <span id="pfopval" class="small" style="float:right">${Math.round(it.opacity*100)}%</span></label><input id="pfop" type="range" min=0 max=1 step=0.01 value="${it.opacity}"></div><div class="field"><label>มุมโค้ง <span id="pfrval" class="small" style="float:right">${it.radius}px</span></label><input id="pfr" type="range" min=0 max=80 step=1 value="${it.radius}"></div><div class="field"><label>สีกรอบ</label><div class="colorbox"><input id="pfbc" type="color" value="${it.borderColor}"><span id="pfbcval">${it.borderColor}</span></div></div><div class="field"><label>ความหนากรอบ <span id="pfbwval" class="small" style="float:right">${it.borderWidth}px</span></label><input id="pfbw" type="range" min=0 max=20 step=1 value="${it.borderWidth}"></div><div class="small">🟨 บาร์อิสระ: ลากทั้งบาร์เพื่อย้าย และลากขอบบน/ล่าง/ซ้าย/ขวาเพื่อครอปโดยไม่กระทบข้อความ</div>`;
+   html+=`<div class="field"><label>สีบาร์</label><div class="colorbox"><input id="pfbg" type="color" value="${it.bg}"><span id="pfbgval">${it.bg}</span></div></div><div class="field"><label>ความกว้าง <span id="pfwval" class="small" style="float:right">${Math.round(it.w)}px</span></label><input id="pfw" type="range" min="40" max="${Math.max(40,state.w)}" step="1" value="${Math.round(it.w)}"></div><div class="field"><label>ความสูง <span id="pfhval" class="small" style="float:right">${Math.round(it.h)}px</span></label><input id="pfh" type="range" min="10" max="${Math.max(10,state.h)}" step="1" value="${Math.round(it.h)}"></div><div class="row"><button class="btn" id="pfw50" type="button">กว้าง 50%</button><button class="btn" id="pfwfull" type="button">เต็มความกว้าง</button></div><div class="field"><label>Opacity <span id="pfopval" class="small" style="float:right">${Math.round(it.opacity*100)}%</span></label><input id="pfop" type="range" min=0 max=1 step=0.01 value="${it.opacity}"></div><div class="field"><label>มุมโค้ง <span id="pfrval" class="small" style="float:right">${it.radius}px</span></label><input id="pfr" type="range" min=0 max=80 step=1 value="${it.radius}"></div><div class="field"><label>สีกรอบ</label><div class="colorbox"><input id="pfbc" type="color" value="${it.borderColor}"><span id="pfbcval">${it.borderColor}</span></div></div><div class="field"><label>ความหนากรอบ <span id="pfbwval" class="small" style="float:right">${it.borderWidth}px</span></label><input id="pfbw" type="range" min=0 max=20 step=1 value="${it.borderWidth}"></div><div class="small">🟨 บาร์อิสระ: ลากทั้งบาร์เพื่อย้าย และลากขอบบน/ล่าง/ซ้าย/ขวาเพื่อครอปโดยไม่กระทบข้อความ</div>`;
  }
  if(it.type==='gradient'){it.color=it.color||'#000000';it.opacity=Number.isFinite(Number(it.opacity))?Number(it.opacity):0.85;it.heightRatio=Number.isFinite(Number(it.heightRatio))?Number(it.heightRatio):0.40;html+=`<div class="field"><label>สีพื้นไล่เฉด</label><div class="colorbox"><input id="gcolor" type="color" value="${it.color}"><span id="gcolorval">${it.color}</span></div></div><div class="field"><label>ความเข้มของสี <span id="gopval" class="small" style="float:right">${Math.round(it.opacity*100)}%</span></label><input id="gop" type="range" min="0" max="1" step="0.01" value="${it.opacity}"></div><div class="field"><label>ความสูงของไล่เฉด <span id="ghval" class="small" style="float:right">${Math.round(it.heightRatio*100)}%</span></label><input id="gh" type="range" min="0.15" max="1" step="0.01" value="${it.heightRatio}"></div><div class="row"><button class="btn" id="gh30" type="button">30%</button><button class="btn" id="gh40" type="button">40%</button><button class="btn" id="gh50" type="button">50%</button><button class="btn" id="gh60" type="button">60%</button><button class="btn" id="gh70" type="button">70%</button></div><div class="small">เลือกสีของไล่เฉดได้อิสระ โดยค่าเริ่มต้นเป็นสีดำ #000000 และขอบล่างจะติดด้านล่าง Canvas เสมอ</div>`;}
  if(it.type==='text'||it.type==='bar'){
@@ -729,6 +743,7 @@ function renderProps(){
 <option value="full" ${it.fit==='full'?'selected':''}>เต็มความกว้าง</option>
 <option value="manual" ${it.fit==='manual'?'selected':''}>กำหนดกว้าง/สูงเอง</option>
 </select></div><div class="small" style="margin-top:-4px;margin-bottom:8px">💡 Auto = ปรับอัตโนมัติตลอดจนกว่าจะเลือก Manual / Manual = ปรับกรอบแถบเอง โดยไม่ขยับตัวหนังสือ</div><div class="field"><label>ระยะห่างบน–ล่างของข้อความ <span id="ppadval" class="small" style="float:right">${Number(it.pad)||0}px</span></label><input id="ppad" type="range" min="4" max="40" step="1" value="${Number(it.pad)||0}"></div>`;
+ if(it.fit==='manual') html+=`<div class="field"><label>ความกว้างแถบ <span id="pbwval" class="small" style="float:right">${Math.round(it.w)}px</span></label><input id="pbw" type="range" min="40" max="${Math.max(40,state.w)}" step="1" value="${Math.round(it.w)}"></div><div class="field"><label>ความสูงแถบ <span id="pbhval" class="small" style="float:right">${Math.round(it.h)}px</span></label><input id="pbh" type="range" min="10" max="${Math.max(10,state.h)}" step="1" value="${Math.round(it.h)}"></div>`;
  }
  if(it.type==='logo'||it.type==='overlay') html+=`<div class="field"><label>หมุนภาพ <span id="protval" class="small" style="float:right">${Math.round(Number(it.rotation)||0)}°</span></label><input id="prot" type="range" min="-180" max="180" step="1" value="${Number(it.rotation)||0}"></div>`;
  html+=`<div class="row"><div class="field"><label>X</label><input id="px" type="number" value="${Math.round(it.x)}"></div><div class="field"><label>Y</label><input id="py" type="number" value="${Math.round(it.y)}"></div></div>
@@ -752,8 +767,16 @@ function renderProps(){
  const bindv=(id,fn)=>{const q=document.getElementById(id);if(q)q.oninput=()=>{fn(q.value);sync()}}
  if(document.getElementById('ptext'))bindv('ptext',v=>it.text=v);
  if(document.getElementById('pfs')){const fsq=document.getElementById('pfs'), fsv=document.getElementById('pfsval'); const setFontSize=v=>{it.fontSize=Math.max(12,Math.min(500,Math.round(+v||12))); fsq.value=it.fontSize; if(fsv)fsv.textContent=it.fontSize+'px'; sync();}; fsq.oninput=()=>setFontSize(fsq.value); const minus=document.getElementById('pfsminus'), plus=document.getElementById('pfsplus'); if(minus)minus.onclick=()=>setFontSize(it.fontSize-2); if(plus)plus.onclick=()=>setFontSize(it.fontSize+2);}
- if(document.getElementById('pfont')){ const q=document.getElementById('pfont'); q.onchange=async()=>{ it.font=q.value; try{ await document.fonts.load(`400 64px '${it.font.replace(/[']/g,'')}'`); }catch(e){} sync(); renderProps(); }; }
+ if(document.getElementById('pfont')){ const q=document.getElementById('pfont'); q.onchange=async()=>{ it.font=q.value; const family=String(it.font||'DB Helvethaica X').replace(/[']/g,''); try{ if(isCustomFont(family)) await registerFont(family, customFonts.find(f=>f.name===family)?.data||''); await document.fonts.load(`400 64px '${family}'`); if(document.fonts.ready) await document.fonts.ready; }catch(e){} sync(); render(); renderProps(); }; }
+ if(document.getElementById('pfw')){const q=document.getElementById('pfw'),v=document.getElementById('pfwval');q.oninput=()=>{it.w=Math.max(40,Math.min(state.w,Math.round(+q.value||40)));if(v)v.textContent=it.w+'px';sync();render();renderProps();};}
+ if(document.getElementById('pfh')){const q=document.getElementById('pfh'),v=document.getElementById('pfhval');q.oninput=()=>{it.h=Math.max(10,Math.min(state.h,Math.round(+q.value||10)));if(v)v.textContent=it.h+'px';sync();render();renderProps();};}
+ if(document.getElementById('pfw50'))document.getElementById('pfw50').onclick=()=>{it.w=Math.round(state.w*.5);sync();render();renderProps();};
+ if(document.getElementById('pfwfull'))document.getElementById('pfwfull').onclick=()=>{it.w=state.w;it.x=0;sync();render();renderProps();};
  if(document.getElementById('pweight'))bindv('pweight',v=>it.fontWeight=Number(v));
+ if(it.type==='bar'&&it.fit==='manual'){
+   if(document.getElementById('pbw')){const q=document.getElementById('pbw'),v=document.getElementById('pbwval');q.oninput=()=>{it.w=Math.max(40,Math.min(state.w,Math.round(+q.value||40)));if(v)v.textContent=it.w+'px';sync();render();renderProps();};}
+   if(document.getElementById('pbh')){const q=document.getElementById('pbh'),v=document.getElementById('pbhval');q.oninput=()=>{it.h=Math.max(10,Math.min(state.h,Math.round(+q.value||10)));if(v)v.textContent=it.h+'px';sync();render();renderProps();};}
+ }
  if(document.getElementById('pstyle'))bindv('pstyle',v=>it.fontStyle=v);
  if(document.getElementById('pc'))bindv('pc',v=>{it.color=v;const z=document.getElementById('pcval');if(z)z.textContent=v});
  if(document.getElementById('pbg'))bindv('pbg',v=>{it.bg=v;const z=document.getElementById('pbgval');if(z)z.textContent=v});
@@ -1156,15 +1179,18 @@ document.getElementById('addFontBtn').onclick=()=>document.getElementById('fontF
 document.getElementById('fontFile').onchange=e=>{
   const f=e.target.files[0]; if(!f)return;
   const reader=new FileReader();
-  reader.onload=()=>{
+  reader.onload=async()=>{
     const name=f.name.replace(/\.(ttf|otf|woff2?|TTF|OTF|WOFF2?)$/,'').replace(/[-_]+/g,' ').trim() || 'My Font';
     const safe=name+' '+Date.now();
-    registerFont(safe,reader.result);
-    customFonts.push({name:safe,data:reader.result});
+    const data=reader.result;
+    try{ await registerFont(safe,data); }catch(err){ console.warn('custom font registration',err); }
+    customFonts.push({name:safe,data});
     saveFonts();
     const it=state.items.find(x=>x.id===state.selected);
     if(it && (it.type==='text'||it.type==='bar')) it.font=safe;
+    try{ await document.fonts.load(`400 64px '${safe.replace(/[']/g,'')}'`); }catch(err){}
     render();
+    if(it && state.selected===it.id){ renderProps(); }
   };
   reader.readAsDataURL(f); e.target.value='';
 };
