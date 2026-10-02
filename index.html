@@ -219,55 +219,79 @@ function loadDraft(){
 let customFonts = JSON.parse(localStorage.getItem('templateStudioFonts') || '[]');
 function saveFonts(){localStorage.setItem('templateStudioFonts', JSON.stringify(customFonts))}
 const customFontFaces=new Map();
-async function registerFont(name, dataUrl){
-  const clean=String(name).replace(/[\'\\]/g,'');
-  if(!dataUrl) return null;
-  try{
-    if(customFontFaces.has(clean)) return customFontFaces.get(clean);
-    if('FontFace' in window && document.fonts){
-      const faces=[];
-      // Register the same uploaded file at each common weight. This is intentional:
-      // uploaded TTF/OTF/WOFF files are usually static fonts, not variable fonts.
-      // Using a 100–900 variable range can make Safari/Chrome skip the custom face
-      // during font matching, especially for standalone Text elements.
-      for(const weight of [100,200,300,400,500,600,700,800,900]){
-        const face=new FontFace(clean, `url(${dataUrl})`, {weight:String(weight), style:'normal', display:'block'});
-        const loaded=await face.load();
-        document.fonts.add(loaded);
-        faces.push(loaded);
-      }
-      customFontFaces.set(clean,faces);
-      return faces;
-    }
-  }catch(e){ console.warn('FontFace load failed',clean,e); }
-  const style=document.createElement('style');
-  style.dataset.customFont=clean;
-  style.textContent=[100,200,300,400,500,600,700,800,900].map(w=>`@font-face{font-family:'${clean}';src:url(${dataUrl});font-weight:${w};font-style:normal;font-display:block}`).join('');
-  document.head.appendChild(style);
-  customFontFaces.set(clean,[style]);
-  return [style];
+function hashFontName(name){
+  let h=2166136261;
+  for(let i=0;i<String(name).length;i++){h^=String(name).charCodeAt(i);h=Math.imul(h,16777619)}
+  return (h>>>0).toString(36);
 }
-async function ensureCustomFontLoaded(name, weight=400){
-  const clean=String(name||'').replace(/[\'\\]/g,'');
+function customFontFamily(name){
+  const f=customFonts.find(x=>x.name===name);
+  return f ? `TSUploaded_${hashFontName(name)}` : String(name||'DB Helvethaica X');
+}
+async function registerFont(name, dataUrl){
+  const clean=String(name).trim();
+  if(!dataUrl) return null;
+  if(customFontFaces.has(clean)) return customFontFaces.get(clean);
+  const family=customFontFamily(clean);
+  try{
+    let src=dataUrl;
+    // Use a Blob URL for uploaded fonts. This is more reliable in Safari/iPadOS
+    // and avoids font-family parsing issues caused by long data URLs.
+    if(/^data:/i.test(dataUrl)){
+      const res=await fetch(dataUrl);
+      const blob=await res.blob();
+      src=URL.createObjectURL(blob);
+    }
+    if('FontFace' in window && document.fonts){
+      const face=new FontFace(family, `url(${src})`, {weight:'400', style:'normal', display:'block'});
+      const loaded=await face.load();
+      document.fonts.add(loaded);
+      customFontFaces.set(clean,{family,face:loaded,src});
+      return loaded;
+    }
+    const style=document.createElement('style');
+    style.dataset.customFont=clean;
+    style.textContent=`@font-face{font-family:'${family}';src:url(${src});font-weight:400;font-style:normal;font-display:block;font-synthesis:none}`;
+    document.head.appendChild(style);
+    customFontFaces.set(clean,{family,style,src});
+    return style;
+  }catch(e){
+    console.warn('Custom font registration failed',clean,e);
+    return null;
+  }
+}
+async function ensureCustomFontLoaded(name){
+  const clean=String(name||'').trim();
   if(!isCustomFont(clean)) return;
   const found=customFonts.find(f=>f.name===clean);
   if(!found) return;
   if(!customFontFaces.has(clean)) await registerFont(clean,found.data);
-  try{ await document.fonts.load(`${Number(weight)||400} 64px '${clean}'`); }catch(e){}
+  const family=customFontFamily(clean);
+  try{ await document.fonts.load(`400 64px '${family}'`); }catch(e){}
 }
 async function loadFonts(){
   for(const f of customFonts){ try{ await registerFont(f.name,f.data); }catch(e){} }
 }
-
 function isCustomFont(name){ return customFonts.some(f=>f.name===name); }
 function fontOptions(selected){
   const built=['Kanit','Prompt','Noto Sans Thai','Sarabun','Arial','DB Helvethaica X','DB Helvethaica X Cond','DB Helvethaica X Ext'];
   return [...built,...customFonts.map(f=>f.name)].map(f=>`<option ${selected===f?'selected':''}>${f}</option>`).join('');
 }
 function defaultFontWeight(it){ return it.type==='bar' ? 800 : 700; }
-function fontWeightOf(it){ const n=Number(it.fontWeight); const name=it.font||'DB Helvethaica X'; if(isCustomFont(name)) return 400; return [100,200,300,400,500,600,700,800,900].includes(n)?n:defaultFontWeight(it); }
+// Uploaded fonts are treated as the exact font file supplied by the user.
+// We deliberately use 400 CSS weight so the browser never synthesizes another
+// face or searches for a missing weight. A bold/black TTF still renders bold/black.
+function fontWeightOf(it){
+  const name=it.font||'DB Helvethaica X';
+  if(isCustomFont(name)) return 400;
+  const n=Number(it.fontWeight);
+  return [100,200,300,400,500,600,700,800,900].includes(n)?n:defaultFontWeight(it);
+}
 function fontStyleOf(it){ const name=it.font||'DB Helvethaica X'; if(isCustomFont(name)) return 'normal'; return it.fontStyle==='italic' ? 'italic' : 'normal'; }
-function fontCss(it){ return `${fontStyleOf(it)} ${fontWeightOf(it)} ${Number(it.fontSize)||64}px '${(it.font||'DB Helvethaica X').replace(/[\'\\]/g,'')}'`; }
+function fontCss(it){
+  const family=customFontFamily(it.font||'DB Helvethaica X').replace(/[\'\\]/g,'');
+  return `${fontStyleOf(it)} ${fontWeightOf(it)} ${Number(it.fontSize)||64}px '${family}'`;
+}
 function fontWeightOptions(selected){
   const v=Number(selected);
   return [[100,'Thin'],[200,'Ultra Light'],[300,'Light'],[400,'Regular'],[500,'Medium'],[600,'Semi Bold'],[700,'Bold'],[800,'Extra Bold'],[900,'Black']].map(([n,l])=>`<option value="${n}" ${v===n?'selected':''}>${l} (${n})</option>`).join('');
@@ -352,7 +376,7 @@ function render(){
     const el=document.createElement('div'); el.className='item '+it.type+'-item'+(state.selected===it.id?' selected':'')+(it.locked?' locked':'');
     el.dataset.id=it.id; el.style.left=it.x+'px';el.style.top=it.y+'px';el.style.width=it.w+'px';el.style.height=it.h+'px';el.style.zIndex=i;
     if(it.type==='text'){
-      el.textContent=it.text;el.style.fontSize=it.fontSize+'px';el.style.color=it.color;el.style.fontFamily=it.font||'DB Helvethaica X';el.style.fontWeight=String(fontWeightOf(it));el.style.fontStyle=fontStyleOf(it);
+      el.textContent=it.text;el.style.fontSize=it.fontSize+'px';el.style.color=it.color;el.style.fontFamily=customFontFamily(it.font||'DB Helvethaica X');el.style.fontWeight=String(fontWeightOf(it));el.style.fontStyle=fontStyleOf(it);el.style.fontSynthesis='none';
       // Plain text is content-sized: its drag target follows the actual text,
       // so users don't have to grab a tiny corner of a fixed-width box.
       el.style.width='max-content'; el.style.height='auto'; el.style.textAlign=it.textAlign||'left';
@@ -360,7 +384,7 @@ function render(){
       it.w=measured.w; it.h=measured.h;
       el.style.width=measured.w+'px'; el.style.height=measured.h+'px';
     }
-    if(it.type==='bar'){el.innerHTML='';el.style.fontSize=it.fontSize+'px';el.style.color=it.color;el.style.fontFamily=it.font||'DB Helvethaica X';el.style.fontWeight=String(fontWeightOf(it));el.style.fontStyle=fontStyleOf(it);el.style.textAlign=it.textAlign||'left';const bg=document.createElement('div');bg.className='bar-bg';bg.style.background=it.bg||'#ffe500';const bc=document.createElement('div');bc.className='bar-content';bc.textContent=it.text;el.appendChild(bg);el.appendChild(bc);fitBar(it,el)}
+    if(it.type==='bar'){el.innerHTML='';el.style.fontSize=it.fontSize+'px';el.style.color=it.color;el.style.fontFamily=customFontFamily(it.font||'DB Helvethaica X');el.style.fontWeight=String(fontWeightOf(it));el.style.fontStyle=fontStyleOf(it);el.style.fontSynthesis='none';el.style.textAlign=it.textAlign||'left';const bg=document.createElement('div');bg.className='bar-bg';bg.style.background=it.bg||'#ffe500';const bc=document.createElement('div');bc.className='bar-content';bc.textContent=it.text;el.appendChild(bg);el.appendChild(bc);fitBar(it,el)}
     if(it.type==='freebar'){
       el.classList.add('freebar-item');
       el.style.background=it.bg||'#ffe500';
@@ -406,7 +430,7 @@ function getBarFontMetrics(ctx, fs, text){
 }
 function measureBarLayout(it, el=null){
   const fs=Math.max(12,Number(it.fontSize)||64);
-  const fontName=(it.font||'DB Helvethaica X').replace(/[']/g,'');
+  const fontName=customFontFamily(it.font||'DB Helvethaica X').replace(/[']/g,'');
   const padX=Math.max(0,Number(it.padX)||0);
   const ctx=document.createElement('canvas').getContext('2d');
   ctx.font=fontCss(it);
@@ -440,7 +464,7 @@ function measureBarLayout(it, el=null){
       content.style.boxSizing='border-box'; content.style.width='100%'; content.style.height='100%';
       content.style.padding=`${padY}px ${padX}px`; content.style.lineHeight=lineHeight+'px'; content.style.whiteSpace='pre-wrap';
       content.style.fontSize=fs+'px'; content.style.fontFamily=`'${fontName}'`; content.style.fontWeight=String(fontWeightOf(it));
-      content.style.fontStyle=fontStyleOf(it);
+      content.style.fontStyle=fontStyleOf(it);content.style.fontSynthesis='none';
       content.style.display='flex'; content.style.pointerEvents='none'; content.style.alignItems='center';
       content.style.justifyContent=it.textAlign==='center'?'center':it.textAlign==='right'?'flex-end':'flex-start';
     }
@@ -526,7 +550,7 @@ function fitBar(it,el){
     content.style.padding=`${m.pad}px ${padX}px`;
     content.style.boxSizing='border-box'; content.style.lineHeight=m.lineHeight+'px'; content.style.fontSize=m.fs+'px';
     content.style.fontFamily=`'${(it.font||'DB Helvethaica X').replace(/[']/g,'')}'`; content.style.fontWeight=String(fontWeightOf(it));
-      content.style.fontStyle=fontStyleOf(it);
+      content.style.fontStyle=fontStyleOf(it);content.style.fontSynthesis='none';
     content.style.display='flex'; content.style.alignItems='center';
     content.style.justifyContent=it.textAlign==='center'?'center':it.textAlign==='right'?'flex-end':'flex-start';
     content.style.whiteSpace='pre-wrap';
@@ -778,15 +802,15 @@ function renderProps(){
    el.style.left=it.x+'px'; el.style.top=it.y+'px'; el.style.width=it.w+'px'; el.style.height=it.h+'px';
    if(it.type==='image'){const im=el.querySelector('img');if(im){it.zoom=Number(it.zoom)||1;im.style.transform=`scale(${it.zoom})`;im.style.objectFit='cover'}el.style.overflow='hidden'}
    if(it.type==='overlay'){const im=el.querySelector('img');it.cropZoom=Number.isFinite(Number(it.cropZoom))?Number(it.cropZoom):1;it.cropX=Number.isFinite(Number(it.cropX))?Number(it.cropX):0;it.cropY=Number.isFinite(Number(it.cropY))?Number(it.cropY):0;applyOverlayShape(el,it);if(im){im.style.objectFit='cover';im.style.width='100%';im.style.height='100%';im.style.transform=`translate(${it.cropX}%,${it.cropY}%) scale(${it.cropZoom})`}}
-   if(it.type==='text'){el.textContent=it.text;el.style.fontSize=it.fontSize+'px';el.style.color=it.color;el.style.fontFamily=it.font||'DB Helvethaica X';el.style.fontWeight=String(fontWeightOf(it));el.style.fontStyle=fontStyleOf(it);el.style.textAlign=it.textAlign||'left'}
-   if(it.type==='bar'){el.style.fontSize=it.fontSize+'px';el.style.color=it.color;el.style.fontFamily=it.font||'DB Helvethaica X';el.style.fontWeight=String(fontWeightOf(it));el.style.fontStyle=fontStyleOf(it);el.style.textAlign=it.textAlign||'left';let bg=el.querySelector('.bar-bg'),bc=el.querySelector('.bar-content');if(!bg){bg=document.createElement('div');bg.className='bar-bg';el.prepend(bg)}if(!bc){bc=document.createElement('div');bc.className='bar-content';el.appendChild(bc)}bc.textContent=it.text;fitBar(it,el)}
+   if(it.type==='text'){el.textContent=it.text;el.style.fontSize=it.fontSize+'px';el.style.color=it.color;el.style.fontFamily=customFontFamily(it.font||'DB Helvethaica X');el.style.fontWeight=String(fontWeightOf(it));el.style.fontStyle=fontStyleOf(it);el.style.fontSynthesis='none';el.style.textAlign=it.textAlign||'left'}
+   if(it.type==='bar'){el.style.fontSize=it.fontSize+'px';el.style.color=it.color;el.style.fontFamily=customFontFamily(it.font||'DB Helvethaica X');el.style.fontWeight=String(fontWeightOf(it));el.style.fontStyle=fontStyleOf(it);el.style.fontSynthesis='none';el.style.textAlign=it.textAlign||'left';let bg=el.querySelector('.bar-bg'),bc=el.querySelector('.bar-content');if(!bg){bg=document.createElement('div');bg.className='bar-bg';el.prepend(bg)}if(!bc){bc=document.createElement('div');bc.className='bar-content';el.appendChild(bc)}bc.textContent=it.text;fitBar(it,el)}
    if(it.type==='gradient'){it.color=it.color||'#000000';el.style.background=`linear-gradient(to bottom, ${rgba(it.color,0)} 0%, ${rgba(it.color,it.opacity*0.12)} 18%, ${rgba(it.color,it.opacity*0.48)} 55%, ${rgba(it.color,it.opacity)} 100%)`;el.style.top=it.y+'px';el.style.height=it.h+'px';}
    saveDraft();
  };
  const bindv=(id,fn)=>{const q=document.getElementById(id);if(q)q.oninput=()=>{fn(q.value);sync()}}
  if(document.getElementById('ptext'))bindv('ptext',v=>it.text=v);
  if(document.getElementById('pfs')){const fsq=document.getElementById('pfs'), fsv=document.getElementById('pfsval'); const setFontSize=v=>{it.fontSize=Math.max(12,Math.min(500,Math.round(+v||12))); fsq.value=it.fontSize; if(fsv)fsv.textContent=it.fontSize+'px'; sync();}; fsq.oninput=()=>setFontSize(fsq.value); const minus=document.getElementById('pfsminus'), plus=document.getElementById('pfsplus'); if(minus)minus.onclick=()=>setFontSize(it.fontSize-2); if(plus)plus.onclick=()=>setFontSize(it.fontSize+2);}
- if(document.getElementById('pfont')){ const q=document.getElementById('pfont'); q.onchange=async()=>{ it.font=q.value; const family=String(it.font||'DB Helvethaica X').replace(/[']/g,''); try{ await ensureCustomFontLoaded(family,fontWeightOf(it)); await document.fonts.load(`${fontWeightOf(it)} 64px '${family}'`); if(document.fonts.ready) await document.fonts.ready; }catch(e){} sync(); render(); renderProps(); }; }
+ if(document.getElementById('pfont')){ const q=document.getElementById('pfont'); q.onchange=async()=>{ it.font=q.value; try{ await ensureCustomFontLoaded(it.font); const family=customFontFamily(it.font||'DB Helvethaica X'); await document.fonts.load(`400 64px '${family}'`); if(document.fonts.ready) await document.fonts.ready; }catch(e){} sync(); render(); renderProps(); }; }
  const smoothBarUpdate=(axis,value)=>{ const el=elById(); if(!el)return; if(axis==='w'){it.w=Math.max(40,Math.min(state.w,Number(value)||40));el.style.width=it.w+'px';}else{it.h=Math.max(10,Math.min(state.h,Number(value)||10));el.style.height=it.h+'px';} if(it.type==='bar'&&it.fit==='manual'){const bg=el.querySelector('.bar-bg');const bc=el.querySelector('.bar-content');if(bg)bg.style.height='100%';if(bc){bc.style.maxWidth='100%';}} };
  const finishBarSlider=()=>{saveDraft();renderProps();};
  if(document.getElementById('pfw')){const q=document.getElementById('pfw'),v=document.getElementById('pfwval');q.oninput=()=>{smoothBarUpdate('w',q.value);if(v)v.textContent=Math.round(it.w)+'px';};q.onchange=finishBarSlider;q.onpointerup=finishBarSlider;}
@@ -1204,12 +1228,12 @@ document.getElementById('fontFile').onchange=e=>{
     const name=f.name.replace(/\.(ttf|otf|woff2?|TTF|OTF|WOFF2?)$/,'').replace(/[-_]+/g,' ').trim() || 'My Font';
     const safe=name+' '+Date.now();
     const data=reader.result;
-    try{ await registerFont(safe,data); }catch(err){ console.warn('custom font registration',err); }
     customFonts.push({name:safe,data});
     saveFonts();
+    try{ await registerFont(safe,data); await ensureCustomFontLoaded(safe); }catch(err){ console.warn('custom font registration',err); }
     const it=state.items.find(x=>x.id===state.selected);
     if(it && (it.type==='text'||it.type==='bar')) it.font=safe;
-    try{ await document.fonts.load(`400 64px '${safe.replace(/[']/g,'')}'`); }catch(err){}
+    try{ const family=customFontFamily(safe); await document.fonts.load(`400 64px '${family}'`); }catch(err){}
     render();
     if(it && state.selected===it.id){ renderProps(); }
   };
